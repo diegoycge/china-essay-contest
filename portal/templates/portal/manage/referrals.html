@@ -1,0 +1,55 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Referrals" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Referrals" %}</h1>
+  <p>{% translate "Essays that judges have referred to the committee chair: suspected AI markers or plagiarism, a recusal, or another concern." %}</p>
+</div></div>
+<div class="stack">
+{% for r in open %}
+  <div class="card">
+    <div class="card-head">
+      <h2><a class="code" href="{% url 'manage_essay' r.assignment.essay.pk %}">{{ r.assignment.essay.code }}</a> &nbsp;<span class="badge badge-warn">{{ r.get_kind_display }}</span></h2>
+      <span class="small muted">{{ r.assignment.judge.full_name }} · {{ r.created_at|date:"SHORT_DATETIME_FORMAT" }}</span>
+    </div>
+    <div class="card-body">
+      <p class="readonly-text">{{ r.notes|default:"—" }}</p>
+      <form method="post" style="margin-top:14px">{% csrf_token %}
+        <input type="hidden" name="referral" value="{{ r.pk }}">
+        <div class="field"><label for="note-{{ r.pk }}">{% translate "Decision note (optional)" %}</label><input type="text" id="note-{{ r.pk }}" name="note"></div>
+        <div class="actions">
+          {% if r.kind == "standpoint" %}
+            <input type="hidden" name="notify" value="1">
+            <button class="btn btn-primary" name="action" value="reassign">{% translate "Reassign to another judge" %}</button>
+            <button class="btn" name="action" value="dismiss">{% translate "Close without reassigning" %}</button>
+          {% else %}
+            <button class="btn" name="action" value="dismiss">{% translate "Keep essay in the contest" %}</button>
+            <button class="btn btn-danger" name="action" value="disqualify" data-confirm="{% translate 'Disqualify this essay?' %}">{% translate "Disqualify essay" %}</button>
+            <a class="btn" href="{% url 'manage_sheet' r.assignment.pk %}">{% translate "View sheet" %}</a>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+{% empty %}
+  <div class="card"><div class="empty">{% translate "No open referrals." %}</div></div>
+{% endfor %}
+
+{% if resolved %}
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Resolved" %}</h2></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>{% translate "Essay ID" %}</th><th>{% translate "Reason" %}</th><th>{% translate "Judge" %}</th><th>{% translate "Decision" %}</th><th>{% translate "Resolved" %}</th></tr></thead>
+      <tbody>{% for r in resolved %}<tr>
+        <td><a class="code" href="{% url 'manage_essay' r.assignment.essay.pk %}">{{ r.assignment.essay.code }}</a></td>
+        <td>{{ r.get_kind_display }}<div class="small muted">{{ r.notes|truncatechars:140 }}</div></td>
+        <td>{{ r.assignment.judge.full_name }}</td>
+        <td class="small">{{ r.resolution }}</td>
+        <td class="small muted nowrap">{{ r.resolved_at|date:"SHORT_DATETIME_FORMAT" }}{% if r.resolved_by %}<br>{{ r.resolved_by.full_name }}{% endif %}</td>
+      </tr>{% endfor %}</tbody>
+    </table></div>
+  </div>
+{% endif %}
+</div>
+{% endblock %}

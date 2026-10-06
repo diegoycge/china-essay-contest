@@ -1,0 +1,19 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block page %}
+<div class="auth-page">
+  <div class="auth-hero">
+    <div class="auth-title">
+      <div class="brand-mark" aria-hidden="true">论</div>
+      <h1>{{ contest.contest_name }}</h1>
+      <p>{% translate "Judging portal" %}</p>
+    </div>
+  </div>
+  <div class="auth-card">
+    {% include "portal/_messages.html" %}
+    <div class="card"><div class="card-body">{% block card %}{% endblock %}</div></div>
+    {% block below %}{% endblock %}
+    <div class="auth-lang">{% include "portal/_lang.html" %}</div>
+  </div>
+</div>
+{% endblock %}

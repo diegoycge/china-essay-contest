@@ -1,0 +1,7 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Rubric" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Judging rubric" %}</h1><p>{% translate "The same criteria appear beside every essay while you score." %}</p></div></div>
+{% include "portal/judge/_rubric_body.html" %}
+{% endblock %}

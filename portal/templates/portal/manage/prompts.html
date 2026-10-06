@@ -1,0 +1,50 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "Essay prompts" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Essay prompts" %}</h1>
+  <p>{% translate "The questions contestants could answer. Judges declare conflicts against this list before they start, so add the prompts before inviting judges." %}</p>
+</div></div>
+<div class="grid side">
+  <div class="card">
+    {% if prompts %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>#</th><th>{% translate "Prompt" %}</th><th>{% translate "Division" %}</th><th class="num">{% translate "Essays" %}</th><th class="num">{% translate "Conflicts" %}</th><th></th></tr></thead>
+      <tbody>
+      {% for p in prompts %}
+        <tr>
+          <td class="num">{{ p.roman }}</td>
+          <td><strong>{{ p.title }}</strong>{% if p.title_zh %} · {{ p.title_zh }}{% endif %}{% if not p.is_active %} <span class="badge badge-muted">{% translate "Inactive" %}</span>{% endif %}<div class="small muted">{{ p.text|truncatechars:160 }}</div></td>
+          <td>{{ p.get_division_display }}</td>
+          <td class="num">{{ p.essay_count }}</td>
+          <td class="num">{{ p.conflict_count }}</td>
+          <td class="right"><a class="btn btn-small" href="{% url 'manage_prompt' p.pk %}">{% translate "Edit" %}</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% else %}
+    <div class="empty">{% translate "No prompts yet." %}</div>
+    {% endif %}
+  </div>
+  <form method="post" class="card" novalidate>{% csrf_token %}
+    <div class="card-head"><h2>{% if editing %}{% translate "Edit prompt" %}{% else %}{% translate "Add a prompt" %}{% endif %}</h2>{% if editing %}<a class="small" href="{% url 'manage_prompts' %}">{% translate "Cancel" %}</a>{% endif %}</div>
+    <div class="card-body">
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.number %}
+        {% include "portal/_field.html" with field=form.division %}
+      </div>
+      {% include "portal/_field.html" with field=form.title %}
+      {% include "portal/_field.html" with field=form.text %}
+      {% include "portal/_field.html" with field=form.title_zh %}
+      {% include "portal/_field.html" with field=form.text_zh %}
+      {% include "portal/_field.html" with field=form.is_active %}
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">{% translate "Save" %}</button>
+        {% if editing %}<button class="btn btn-danger" name="action" value="delete" formnovalidate data-confirm="{% translate 'Delete this prompt?' %}">{% translate "Delete" %}</button>{% endif %}
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends "portal/base.html" %}
+{% load i18n static portal_tags %}
+{% block title %}{% translate "Anonymization review" %} · {{ essay.code }}{% endblock %}
+{% block container_class %}wide{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="small" style="margin:0 0 6px"><a href="{% url 'manage_essay' essay.pk %}">← {{ essay.code }}</a>{% if position %} · {% blocktranslate %}{{ position }} of {{ queue_total }} in the review queue{% endblocktranslate %}{% endif %}</p>
+    <h1>{% translate "Anonymization review" %} <span class="code" style="font-size:22px">{{ essay.code }}</span> {% essay_badge essay %}</h1>
+    <p>{% translate "These are the essay’s own pages. Black boxes are what judges will not see. Click a box to switch it on or off, drag on a page to draw a new one, and leave out any page that is not part of the essay." %}</p>
+  </div>
+  <div class="actions">{% if next_id %}<a class="btn" href="{% url 'manage_review' next_id %}">{% translate "Skip to next" %} →</a>{% endif %}</div>
+</div>
+
+{% if essay.status == "failed" or not essay.work_dir %}
+<div class="card"><div class="card-body">
+  <p class="notice danger">{{ essay.extraction_note|failure }}</p>
+  <p>{% translate "The file is stored but cannot be shown to judges. Download it to see what is wrong; if the contestant sends a corrected PDF, upload that instead and delete this one." %}</p>
+  <form method="post" class="actions">{% csrf_token %}
+    <button class="btn" name="action" value="retry">{% translate "Try processing it again" %}</button>
+    {% if essay.original_file %}<a class="btn" href="{% url 'manage_original' essay.pk %}">{% translate "Download original" %}</a>{% endif %}
+  </form>
+</div></div>
+{% else %}
+{% if essay.status == "approved" and started %}<div class="notice warn">{% translate "This essay is already with judges. Changes you save here reach them immediately, after passing the same checks as a release." %}</div>{% endif %}
+
+<form method="post" id="review-form" class="review-layout" data-leave="{% translate 'You have unsaved changes to the redactions.' %}">{% csrf_token %}
+  <input type="hidden" name="state" id="state">
+  <div class="review-main">
+    <div class="tabs" role="tablist" style="margin-bottom:12px">
+      <button type="button" class="active" data-view="pages">{% translate "Pages" %}</button>
+      <button type="button" data-view="text">{% translate "Text judges can copy" %}</button>
+    </div>
+    <div id="view-pages">
+      {% for page in pages %}
+      <section class="rpage{% if page.dropped %} dropped{% endif %}" data-page="{{ page.index }}">
+        <header>
+          <strong>{% blocktranslate with n=page.number total=essay.page_count %}Page {{ n }} of {{ total }}{% endblocktranslate %}</strong>
+          <span class="badge badge-warn rpage-out">{% translate "Left out — judges will not get this page" %}</span>
+          <button type="button" class="btn btn-small" data-drop data-label-drop="{% translate 'Leave this page out' %}" data-label-keep="{% translate 'Put this page back' %}"></button>
+        </header>
+        <div class="rpage-canvas">
+          <img src="{% url 'manage_page' essay.pk page.number %}" alt="{% blocktranslate with n=page.number %}Page {{ n }}{% endblocktranslate %}" loading="lazy" draggable="false">
+          <div class="rpage-layer"></div>
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+    <div id="view-text" hidden>
+      <p class="notice">{% translate "This is the text copy judges can select and search, as of your last save. Words under a black box are removed from it. Check it too: a PDF can carry text that is not visible on the page." %}</p>
+      {% for text in text_pages %}
+      <div class="card" style="margin-bottom:12px"><div class="card-head"><h3>{% blocktranslate with n=forloop.counter %}Page {{ n }}{% endblocktranslate %}</h3></div><pre class="plain-page">{{ text }}</pre></div>
+      {% empty %}<div class="card"><div class="empty">{% translate "No readable text." %}</div></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <aside class="review-side">
+    <div class="card">
+      <div class="card-body stack">
+        <div class="review-counts small"><span><i class="swatch on"></i> <b id="count-on">0</b> {% translate "redacted" %}</span><span><i class="swatch off"></i> <b id="count-off">0</b> {% translate "outlined, not redacted" %}</span></div>
+        {% if problems %}<p class="notice warn small" style="margin:0">{% translate "Before release" %}: {{ problems }}.</p>{% endif %}
+        <button class="btn" name="action" value="save">{% translate "Save" %}</button>
+        {% if essay.status == "approved" %}
+          <a class="btn" href="{% url 'manage_preview' essay.pk %}">{% translate "See what judges see" %}</a>
+          <button class="btn btn-danger" name="action" value="unrelease" data-confirm="{% translate 'Pull this essay back? Judges will not see it until you release it again.' %}">{% translate "Pull back from judges" %}</button>
+        {% elif essay.status == "needs_review" %}
+          <button class="btn btn-primary" name="action" value="approve">{% translate "Release to judges" %}</button>
+        {% endif %}
+        <label class="check" style="margin:0"><input type="checkbox" name="override" value="1"> <span class="small">{% translate "Release anyway: I have checked the pages myself and the warning above is a false alarm" %}</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>{% translate "Redact a word everywhere" %}</h3></div>
+      <div class="card-body">
+        <div class="copy-box" style="margin:0">
+          <input type="text" name="term" maxlength="60" placeholder="{% translate 'Word or phrase' %}" aria-label="{% translate 'Word or phrase' %}">
+          <button class="btn btn-small" name="action" value="term">{% translate "Redact" %}</button>
+        </div>
+        <p class="small muted" style="margin:8px 0 0">{% translate "Finds it on every page. For anything the search cannot find (a logo, a signature, a scan), drag a box over it." %}</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h3>{% translate "Checklist" %}</h3></div>
+      {% if essay.flags %}
+      <ul class="flag-list">
+        {% for flag in essay.flags %}<li class="{{ flag|flag_tone }}"><span class="dot"></span><div>{{ flag|flag_title }}</div></li>{% endfor %}
+      </ul>
+      {% else %}<div class="empty small">{% translate "Nothing was found automatically. Still look over the first and last pages." %}</div>{% endif %}
+    </div>
+    <div class="card identity">
+      <div class="card-head"><h3>{% translate "Author on record" %}</h3><span class="badge badge-danger">{% translate "Never shown to judges" %}</span></div>
+      <div class="card-body">
+        <dl>
+          <dt>{% translate "Name" %}</dt><dd>{{ essay.author_name|default:"—" }}</dd>
+          <dt>{% translate "School" %}</dt><dd>{{ essay.author_school|default:"—" }}</dd>
+          <dt>{% translate "Email" %}</dt><dd>{{ essay.author_email|default:"—" }}</dd>
+          <dt>{% translate "File" %}</dt><dd>{{ essay.original_filename }}</dd>
+          {% if essay.meta_authors %}<dt>{% translate "File properties" %}</dt><dd>{{ essay.meta_authors|join:", " }}</dd>{% endif %}
+        </dl>
+        <p class="small" style="margin:12px 0 0"><a href="{% url 'manage_essay' essay.pk %}">{% translate "Edit author details" %}</a>{% if essay.original_file %} · <a href="{% url 'manage_original' essay.pk %}">{% translate "Download original" %}</a>{% endif %}</p>
+      </div>
+    </div>
+    <button class="btn btn-small" name="action" value="rerun" data-confirm="{% if essay.status == 'approved' %}{% translate 'Start the automatic redaction again? Your own boxes will be removed and the essay will be pulled back from judges until you release it again.' %}{% else %}{% translate 'Start the automatic redaction again? Your own boxes will be removed.' %}{% endif %}">{% translate "Start automatic redaction again" %}</button>
+  </aside>
+</form>
+{% endif %}
+{% endblock %}
+{% block scripts %}
+{% if essay.work_dir %}{{ state|json_script:"review-state" }}<script src="{% static 'portal/js/review.js' %}"></script>{% endif %}
+{% endblock %}

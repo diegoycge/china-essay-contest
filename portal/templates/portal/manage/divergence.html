@@ -1,0 +1,43 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "Divergence and re-scores" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Divergence and re-scores" %}</h1>
+  <p>{% blocktranslate with t=threshold|score:1 %}An essay appears here when the gap between any two initial readers’ average scores is {{ t }} points or more. Assign one further reader to re-score it.{% endblocktranslate %} <a href="{% url 'manage_settings' %}">{% translate "Change the threshold" %}</a></p>
+</div></div>
+<div class="card">
+  {% if summaries %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{% translate "Essay ID" %}</th><th>{% translate "Division" %}</th><th>{% translate "Reader averages" %}</th><th class="num">{% translate "Gap" %}</th><th>{% translate "Re-score" %}</th></tr></thead>
+    <tbody>
+    {% for s in summaries %}
+      <tr>
+        <td><a class="code" href="{% url 'manage_essay' s.essay.pk %}">{{ s.essay.code }}</a></td>
+        <td>{{ s.essay.get_division_display }}</td>
+        <td><div class="spread-chips">{% for a in s.submitted %}<a class="chip" href="{% url 'manage_sheet' a.pk %}" title="{{ a.judge.full_name }}">{{ a.sheet.average|score:2 }}{% if a.round == "rescore" %} ↻{% endif %}</a>{% endfor %}</div></td>
+        <td class="num"><strong>{{ s.initial_spread|score:2 }}</strong></td>
+        <td>
+          {% if s.needs_rescore %}
+          <form method="post" class="actions">{% csrf_token %}
+            <input type="hidden" name="essay" value="{{ s.essay.pk }}">
+            <select name="judge" style="width:auto;min-width:180px" aria-label="{% translate 'Judge' %}">
+              <option value="">{% translate "Least-loaded eligible judge" %}</option>
+              {% for judge in s.candidates %}<option value="{{ judge.pk }}">{{ judge.full_name }} ({{ judge.current_load }})</option>{% endfor %}
+            </select>
+            <input type="hidden" name="notify" value="1">
+            <button class="btn btn-small btn-primary">{% translate "Assign re-score" %}</button>
+          </form>
+          {% elif s.has_rescore and s.pending %}<span class="badge badge-info">{% translate "Re-score in progress" %}</span>
+          {% elif s.has_rescore %}<span class="badge badge-ok">{% translate "Re-scored" %}</span> <span class="small muted">{% translate "Final score" %} {{ s.final|score:2 }}</span>
+          {% else %}<span class="badge badge-muted">{% translate "Waiting for the initial readers" %}</span>{% endif %}
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% else %}
+  <div class="empty">{% translate "No essays have divergent scores." %}</div>
+  {% endif %}
+</div>
+{% endblock %}

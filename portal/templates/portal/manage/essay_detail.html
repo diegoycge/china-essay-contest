@@ -1,0 +1,135 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{{ essay.code }}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="small" style="margin:0 0 6px"><a href="{% url 'manage_essays' %}">← {% translate "All essays" %}</a></p>
+    <h1><span class="code" style="font-size:24px">{{ essay.code }}</span> {% essay_badge essay %}{% if essay.is_finalist %} <span class="badge badge-gold">{% translate "Finalist" %}</span>{% endif %}</h1>
+    <p>{{ essay.get_division_display }} · {{ essay.prompt|prompt_label }} · {% blocktranslate count n=essay.page_count %}{{ n }} page{% plural %}{{ n }} pages{% endblocktranslate %} · {% blocktranslate count n=essay.word_count %}{{ n }} word{% plural %}{{ n }} words{% endblocktranslate %}</p>
+  </div>
+  <div class="actions">
+    {% if essay.release_dir %}<a class="btn" href="{% url 'manage_preview' essay.pk %}">{% translate "See what judges see" %}</a>{% endif %}
+    <a class="btn" href="{% url 'manage_review' essay.pk %}">{% translate "Anonymization review" %}</a>
+    {% if essay.original_file %}<a class="btn" href="{% url 'manage_original' essay.pk %}">{% translate "Download original" %}</a>{% endif %}
+  </div>
+</div>
+
+{% if essay.status == "failed" %}<div class="notice danger">{{ essay.extraction_note|failure }}</div>{% endif %}
+{% for referral in open_referrals %}<div class="notice warn">{% translate "Open referral" %}: {{ referral.get_kind_display }} — <a href="{% url 'manage_referrals' %}">{% translate "Open" %}</a></div>{% endfor %}
+
+<div class="grid side">
+  <div class="stack">
+    <div class="card">
+      <div class="card-head">
+        <h2>{% translate "Readers and scores" %}</h2>
+        {% if summary.final is not None %}<div><span class="muted small">{% if summary.complete %}{% translate "Final score" %}{% else %}{% translate "Provisional score" %}{% endif %}</span> <span class="big-score">{{ summary.final|score:2 }}</span></div>{% endif %}
+      </div>
+      {% if assignments %}
+      <div class="table-wrap"><table>
+        <thead><tr><th>{% translate "Judge" %}</th><th>{% translate "Round" %}</th><th>{% translate "Status" %}</th><th class="num">{% translate "Average" %}</th><th></th></tr></thead>
+        <tbody>
+        {% for a in assignments %}
+          <tr>
+            <td><a href="{% url 'manage_user' a.judge.pk %}">{{ a.judge.full_name }}</a>{% if a.closed_reason %}<div class="small muted">{{ a.closed_reason }}</div>{% endif %}</td>
+            <td>{{ a.get_round_display }}</td>
+            <td>{% assignment_badge a %}</td>
+            <td class="num">{% if a.status == "submitted" %}{{ a.sheet.average|score:2 }}{% else %}—{% endif %}</td>
+            <td class="right nowrap">
+              {% if a.status == "submitted" or a.status == "draft" %}<a class="btn btn-small" href="{% url 'manage_sheet' a.pk %}">{% translate "View sheet" %}</a>{% endif %}
+              {% if a.is_active %}
+              <form method="post" class="inline-form" data-confirm="{% translate 'Remove this assignment? Any scores it holds will stop counting.' %}">{% csrf_token %}
+                <input type="hidden" name="assignment" value="{{ a.pk }}">
+                <button class="btn btn-small btn-danger" name="action" value="remove_assignment">{% translate "Remove" %}</button>
+              </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table></div>
+      {% else %}
+      <div class="empty">{% translate "No judges assigned yet." %}</div>
+      {% endif %}
+      <div class="card-foot">
+        {% if summary.divergent %}<p class="small" style="margin:0 0 10px"><span class="badge badge-warn">{% translate "Divergent" %}</span> {% blocktranslate with spread=summary.initial_spread|score:2 %}Initial readers are {{ spread }} points apart.{% endblocktranslate %}</p>{% endif %}
+        {% if essay.is_judgeable %}
+        <form method="post" class="actions">{% csrf_token %}
+          <select name="judge" style="width:auto;min-width:200px" aria-label="{% translate 'Judge' %}">
+            <option value="">{% translate "Least-loaded eligible judge" %}</option>
+            {% for judge in candidates %}<option value="{{ judge.pk }}">{{ judge.full_name }} ({{ judge.current_load }})</option>{% endfor %}
+          </select>
+          <select name="round" style="width:auto" aria-label="{% translate 'Round' %}">
+            <option value="initial">{% translate "Initial" %}</option>
+            <option value="rescore"{% if summary.needs_rescore %} selected{% endif %}>{% translate "Re-score" %}</option>
+          </select>
+          <label class="check" style="margin:0"><input type="checkbox" name="notify" value="1" checked> <span>{% translate "Email the judge" %}</span></label>
+          <button class="btn" name="action" value="assign">{% translate "Assign reader" %}</button>
+        </form>
+        <p class="small muted" style="margin:8px 0 0">{% translate "Only judges who have signed the statement, have not read this essay, have no declared conflict with its prompt, and are under their limit are listed." %}</p>
+        {% else %}
+        <p class="small muted" style="margin:0">{% translate "Release the essay from anonymization review before assigning judges." %}</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <form method="post" class="card" novalidate>{% csrf_token %}
+      <div class="card-head"><h2>{% translate "Author and classification" %}</h2><span class="badge badge-danger">{% translate "Never shown to judges" %}</span></div>
+      <div class="card-body">
+        <div class="form-row">
+          {% include "portal/_field.html" with field=form.author_name %}
+          {% include "portal/_field.html" with field=form.author_email %}
+        </div>
+        <div class="form-row">
+          {% include "portal/_field.html" with field=form.author_school %}
+          {% include "portal/_field.html" with field=form.author_level %}
+        </div>
+        <div class="form-row">
+          {% include "portal/_field.html" with field=form.prompt %}
+          {% include "portal/_field.html" with field=form.division %}
+        </div>
+        {% include "portal/_field.html" with field=form.admin_notes %}
+        <button class="btn btn-primary" name="action" value="save_meta">{% translate "Save" %}</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="stack">
+    <div class="card"><div class="card-body">
+      <dl class="kv small">
+        <dt>{% translate "Original file" %}</dt><dd style="overflow-wrap:anywhere">{{ essay.original_filename|default:"—" }}</dd>
+        <dt>{% translate "Uploaded" %}</dt><dd>{{ essay.uploaded_at|date:"SHORT_DATETIME_FORMAT" }}{% if essay.uploaded_by %} · {{ essay.uploaded_by.full_name }}{% endif %}</dd>
+        <dt>{% translate "Released" %}</dt><dd>{% if essay.approved_at %}{{ essay.approved_at|date:"SHORT_DATETIME_FORMAT" }}{% if essay.approved_by %} · {{ essay.approved_by.full_name }}{% endif %}{% else %}—{% endif %}</dd>
+      </dl>
+    </div></div>
+
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Actions" %}</h2></div>
+      <div class="card-body stack">
+        {% if essay.status == "approved" %}
+        <form method="post">{% csrf_token %}
+          <button class="btn" name="action" value="finalist" style="width:100%">{% if essay.is_finalist %}{% translate "Remove finalist status" %}{% else %}{% translate "Confirm as finalist" %}{% endif %}</button>
+          {% if essay.is_finalist and essay.finalist_confirmed_by %}<p class="small muted" style="margin:6px 0 0">{% blocktranslate with name=essay.finalist_confirmed_by.full_name when=essay.finalist_confirmed_at|date:"SHORT_DATE_FORMAT" %}Confirmed by {{ name }} on {{ when }}{% endblocktranslate %}</p>{% endif %}
+        </form>
+        {% endif %}
+        <form method="post" data-confirm="{% translate 'Are you sure?' %}">{% csrf_token %}
+          <input type="hidden" name="action" value="status">
+          {% if essay.status == "withdrawn" or essay.status == "disqualified" %}
+            <button class="btn" name="status" value="restore" style="width:100%">{% translate "Restore essay" %}</button>
+          {% else %}
+            <div class="actions">
+              <button class="btn btn-danger" name="status" value="withdrawn" style="flex:1">{% translate "Withdraw" %}</button>
+              <button class="btn btn-danger" name="status" value="disqualified" style="flex:1">{% translate "Disqualify" %}</button>
+            </div>
+          {% endif %}
+        </form>
+        {% if not assignments %}
+        <form method="post" data-confirm="{% translate 'Delete this essay and its file permanently?' %}">{% csrf_token %}
+          <button class="btn btn-danger" name="action" value="delete" style="width:100%">{% translate "Delete essay" %}</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

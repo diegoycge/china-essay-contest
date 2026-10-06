@@ -1,0 +1,12 @@
+{% extends "portal/auth/_shell.html" %}
+{% load i18n %}
+{% block title %}{% translate "Link no longer valid" %}{% endblock %}
+{% block card %}
+<h2 style="margin-bottom:10px">{% translate "This link is no longer valid" %}</h2>
+{% if kind == "invite" %}
+  <p>{% translate "Invitation links work once and expire. If you have already created your account, sign in instead. Otherwise ask the committee to send a new invitation." %}</p>
+{% else %}
+  <p>{% translate "Password reset links work once and expire after 24 hours. Request a new one." %}</p>
+{% endif %}
+<a class="btn btn-primary" href="{% if kind == 'invite' %}{% url 'login' %}{% else %}{% url 'forgot_password' %}{% endif %}" style="width:100%">{% if kind == "invite" %}{% translate "Sign in" %}{% else %}{% translate "Reset password" %}{% endif %}</a>
+{% endblock %}

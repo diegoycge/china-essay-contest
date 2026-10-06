@@ -1,0 +1,59 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Settings" %}{% endblock %}
+{% block container_class %}narrow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Settings" %}</h1></div></div>
+<form method="post" class="stack" novalidate>{% csrf_token %}
+  {% include "portal/_form_errors.html" %}
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Contest" %}</h2></div>
+    <div class="card-body">
+      {% include "portal/_field.html" with field=form.contest_name %}
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.contact_email %}
+        {% include "portal/_field.html" with field=form.word_limit %}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "From the contest website" %}</h2><a class="small" href="{{ website }}" rel="noopener noreferrer" target="_blank">{{ website }}</a></div>
+    <div class="card-body">
+      <ul style="margin:0;padding-left:20px">{% for line in logistics %}<li>{{ line }}</li>{% endfor %}</ul>
+      <p class="small muted" style="margin:10px 0 0">{% translate "For reference only. The judging deadline below is separate and is yours to set; it should fall after the last date on which essays can arrive." %}</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Deadlines and reminders" %}</h2><span class="small muted">{% blocktranslate %}Times are in {{ time_zone }}{% endblocktranslate %}</span></div>
+    <div class="card-body">
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.initial_deadline %}
+        {% include "portal/_field.html" with field=form.rescore_deadline %}
+      </div>
+      {% include "portal/_field.html" with field=form.reminder_days %}
+      {% if not email_configured %}<p class="notice warn" style="margin:0">{% translate "Email is not configured on this server, so reminders will not be delivered." %}</p>{% endif %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Scoring rules" %}</h2></div>
+    <div class="card-body">
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.readers_per_essay %}
+        {% include "portal/_field.html" with field=form.min_comment_words %}
+      </div>
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.divergence_threshold %}
+        {% include "portal/_field.html" with field=form.rescore_method %}
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Invitations" %}</h2></div>
+    <div class="card-body">
+      {% include "portal/_field.html" with field=form.invite_valid_days %}
+      <p class="small muted" style="margin:0">{% blocktranslate %}Links in emails point to {{ site_url }}. This is set by SITE_URL on the server.{% endblocktranslate %}</p>
+    </div>
+  </div>
+  <div><button class="btn btn-primary" type="submit">{% translate "Save settings" %}</button></div>
+</form>
+{% endblock %}

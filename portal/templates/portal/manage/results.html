@@ -1,0 +1,53 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "Results" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <h1>{% translate "Results" %}</h1>
+    <p>{% translate "Essays are ranked within their division by final score, once every assigned reader has submitted. The final score is the mean of the human readers’ average scores; for re-scored essays it follows the rule chosen in Settings." %}</p>
+  </div>
+  <div class="actions">
+    <a class="btn btn-primary" href="{% url 'manage_export' 'xlsx' %}">{% translate "Export XLSX" %}</a>
+    <a class="btn" href="{% url 'manage_export' 'xlsx-identities' %}" data-confirm-link="{% translate 'This export includes author names. Keep it away from judges. Continue?' %}">{% translate "XLSX with identities" %}</a>
+    <a class="btn" href="{% url 'manage_export' 'scores' %}">{% translate "Scores CSV" %}</a>
+    <a class="btn" href="{% url 'manage_export' 'rankings' %}">{% translate "Rankings CSV" %}</a>
+  </div>
+</div>
+<div class="stack">
+{% for d in divisions %}
+  <div class="card">
+    <div class="card-head">
+      <h2>{{ d.label }}</h2>
+      <span class="small muted">{% blocktranslate with n=d.rows|length %}{{ n }} ranked{% endblocktranslate %}{% if d.incomplete %} · {% blocktranslate with n=d.incomplete %}{{ n }} still being scored{% endblocktranslate %}{% endif %} · {% blocktranslate with n=d.finalists %}{{ n }} finalists{% endblocktranslate %}</span>
+    </div>
+    {% if d.rows %}
+    <div class="table-wrap"><table>
+      <thead><tr><th class="num">{% translate "Rank" %}</th><th>{% translate "Essay ID" %}</th><th>{% translate "Prompt" %}</th><th>{% translate "Reader averages" %}</th><th class="num">{% translate "Gap" %}</th><th class="num">{% translate "Final score" %}</th><th>{% translate "Finalist" %}</th></tr></thead>
+      <tbody>
+      {% for s in d.rows %}
+        <tr>
+          <td class="num"><strong>{{ s.rank }}</strong></td>
+          <td><a class="code" href="{% url 'manage_essay' s.essay.pk %}">{{ s.essay.code }}</a></td>
+          <td class="small">{{ s.essay.prompt|prompt_label }}</td>
+          <td><div class="spread-chips">{% for a in s.submitted %}<a class="chip" href="{% url 'manage_sheet' a.pk %}" title="{{ a.judge.full_name }}">{{ a.sheet.average|score:2 }}{% if a.round == "rescore" %} ↻{% endif %}</a>{% endfor %}</div></td>
+          <td class="num">{{ s.spread|score:2 }}</td>
+          <td class="num"><span class="big-score" style="font-size:17px">{{ s.final|score:2 }}</span></td>
+          <td>
+            <form method="post" action="{% url 'manage_finalist' s.essay.pk %}" class="inline-form">{% csrf_token %}
+              {% if s.essay.is_finalist %}<button class="btn btn-small" title="{% translate 'Remove finalist status' %}"><span class="badge badge-gold">★ {% translate "Finalist" %}</span></button>
+              {% else %}<button class="btn btn-small">{% translate "Confirm" %}</button>{% endif %}
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% else %}
+    <div class="empty">{% translate "No fully scored essays in this division yet." %}</div>
+    {% endif %}
+  </div>
+{% endfor %}
+</div>
+<p class="small muted" style="margin-top:14px">↻ {% translate "marks a re-score reader. Hover over a score to see the judge; click it to open the sheet." %}</p>
+{% endblock %}

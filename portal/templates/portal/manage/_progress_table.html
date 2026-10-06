@@ -1,0 +1,26 @@
+{% load i18n %}
+{% if progress %}
+<div class="table-wrap"><table>
+  <thead><tr>
+    <th>{% translate "Judge" %}</th><th class="num">{% translate "Assigned" %}</th><th class="num">{% translate "Not started" %}</th>
+    <th class="num">{% translate "In progress" %}</th><th class="num">{% translate "Submitted" %}</th><th style="width:22%">{% translate "Progress" %}</th><th>{% translate "Last active" %}</th>
+  </tr></thead>
+  <tbody>
+  {% for row in progress %}
+    <tr>
+      <td><a href="{% url 'manage_user' row.judge.pk %}">{{ row.judge.full_name }}</a>
+        {% if not row.judge.is_active %}<span class="badge badge-muted">{% translate "Deactivated" %}</span>
+        {% elif not row.judge.has_signed_in %}<span class="badge badge-muted">{% translate "Invited" %}</span>
+        {% elif not row.judge.is_onboarded %}<span class="badge badge-info">{% translate "Statement unsigned" %}</span>{% endif %}
+        {% if row.overdue %}<span class="badge badge-danger">{% blocktranslate with n=row.overdue %}{{ n }} overdue{% endblocktranslate %}</span>{% endif %}
+      </td>
+      <td class="num">{{ row.total }}</td><td class="num">{{ row.not_started }}</td><td class="num">{{ row.draft }}</td><td class="num">{{ row.submitted }}</td>
+      <td><div class="progress-row"><div class="bar"><span style="width:{{ row.percent }}%"></span></div><span class="small muted tabular">{{ row.percent }}%</span></div></td>
+      <td class="small muted nowrap">{% if row.last_activity %}{{ row.last_activity|date:"SHORT_DATETIME_FORMAT" }}{% else %}—{% endif %}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table></div>
+{% else %}
+<div class="empty">{% translate "No judges yet." %} <a href="{% url 'manage_users' %}">{% translate "Invite judges" %}</a></div>
+{% endif %}

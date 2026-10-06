@@ -1,0 +1,45 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "All essays" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "All essays" %}</h1><p>{% translate "Author details on this page are visible to administrators only. Judges see the essay ID and the anonymized text." %}</p></div>
+  <div class="actions"><a class="btn btn-primary" href="{% url 'manage_upload' %}">{% translate "Upload essays" %}</a></div>
+</div>
+<div class="card">
+  <form method="get" class="filters">
+    <div class="field grow"><label for="q">{% translate "Search" %}</label><input type="search" id="q" name="q" value="{{ filters.q }}" placeholder="{% translate 'Essay ID, author, school or file name' %}"></div>
+    <div class="field"><label for="f-status">{% translate "Status" %}</label>
+      <select id="f-status" name="status"><option value="">{% translate "All" %}</option>{% for value, label in status_choices %}<option value="{{ value }}"{% if filters.status == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    <div class="field"><label for="f-division">{% translate "Division" %}</label>
+      <select id="f-division" name="division"><option value="">{% translate "All" %}</option>{% for value, label in division_choices %}<option value="{{ value }}"{% if filters.division == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></div>
+    {% if prompts %}
+    <div class="field"><label for="f-prompt">{% translate "Prompt" %}</label>
+      <select id="f-prompt" name="prompt"><option value="">{% translate "All" %}</option>{% for p in prompts %}<option value="{{ p.pk }}"{% if filters.prompt == p.pk|stringformat:"s" %} selected{% endif %}>{{ p|prompt_label }}</option>{% endfor %}</select></div>
+    {% endif %}
+    <button class="btn" type="submit">{% translate "Filter" %}</button>
+  </form>
+  {% if rows %}
+  <div class="table-wrap"><table>
+    <thead><tr><th>{% translate "Essay ID" %}</th><th>{% translate "Author" %}</th><th>{% translate "Division" %}</th><th>{% translate "Prompt" %}</th><th>{% translate "Status" %}</th><th class="num">{% translate "Readers" %}</th><th class="num">{% translate "Score" %}</th><th></th></tr></thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td><a class="code" href="{% url 'manage_essay' row.essay.pk %}">{{ row.essay.code }}</a>{% if row.essay.is_finalist %} <span class="badge badge-gold">{% translate "Finalist" %}</span>{% endif %}</td>
+        <td>{{ row.essay.author_name|default:"—" }}<div class="small muted">{{ row.essay.author_school }}</div></td>
+        <td>{{ row.essay.get_division_display }}</td>
+        <td class="small">{{ row.essay.prompt|prompt_label }}</td>
+        <td>{% essay_badge row.essay %}</td>
+        <td class="num">{% if row.summary %}{{ row.summary.submitted|length }} / {{ row.summary.active|length }}{% if row.summary.needs_rescore %} <span class="badge badge-warn">{% translate "Divergent" %}</span>{% endif %}{% else %}—{% endif %}</td>
+        <td class="num">{% if row.summary and row.summary.final is not None %}{% if row.summary.complete %}<strong>{{ row.summary.final|score:2 }}</strong>{% else %}<span class="muted" title="{% translate 'Provisional — not every reader has submitted' %}">{{ row.summary.final|score:2 }}*</span>{% endif %}{% else %}—{% endif %}</td>
+        <td class="right nowrap">{% if row.essay.status == "needs_review" or row.essay.status == "failed" %}<a class="btn btn-small" href="{% url 'manage_review' row.essay.pk %}">{% translate "Review" %}</a>{% else %}<a class="btn btn-small" href="{% url 'manage_essay' row.essay.pk %}">{% translate "Open" %}</a>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table></div>
+  {% include "portal/_pagination.html" %}
+  {% else %}
+  <div class="empty">{% translate "No essays match." %}</div>
+  {% endif %}
+</div>
+{% endblock %}

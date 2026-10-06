@@ -1,0 +1,12 @@
+{% load i18n %}
+{% for draft in drafts %}
+<div style="margin-top:10px">
+  <a class="btn btn-small" style="width:100%" href="{{ draft.mailto }}">{% blocktranslate count n=draft.count with language=draft.language %}Write to {{ n }} judge ({{ language }}){% plural %}Write to {{ n }} judges ({{ language }}){% endblocktranslate %}</a>
+  <details class="small" style="margin-top:4px">
+    <summary class="muted">{% translate "Or copy it into another app" %}</summary>
+    <label class="small" for="draft-to-{{ forloop.counter }}-{{ draft.count }}">{% translate "Addresses" %}</label>
+    <textarea class="draft" readonly rows="2" data-select-on-focus id="draft-to-{{ forloop.counter }}-{{ draft.count }}">{{ draft.addresses }}</textarea>
+    <textarea class="draft" readonly rows="6" data-select-on-focus aria-label="{% translate 'Message' %}">{{ draft.message }}</textarea>
+  </details>
+</div>
+{% endfor %}

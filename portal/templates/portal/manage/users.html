@@ -1,0 +1,67 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Judges and admins" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Judges and admins" %}</h1>
+  <p>{% translate "People join by invitation only. Each invitation is a one-time link with which they set up their own sign-in: a passkey or a password." %}</p>
+</div></div>
+{% include "portal/_link_notice.html" %}
+
+<div class="grid side">
+  <div class="stack">
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Judges" %} <span class="muted">({{ judges|length }})</span></h2></div>
+      {% if judges %}
+      <div class="table-wrap"><table>
+        <thead><tr><th>{% translate "Name" %}</th><th>{% translate "Status" %}</th><th class="num">{% translate "Assigned" %}</th><th class="num">{% translate "Submitted" %}</th><th>{% translate "Conflicts" %}</th></tr></thead>
+        <tbody>
+        {% for person in judges %}
+          <tr>
+            <td><a href="{% url 'manage_user' person.pk %}">{{ person.full_name }}</a><div class="small muted">{{ person.email }}{% if person.affiliation %} · {{ person.affiliation }}{% endif %}</div></td>
+            <td>{% include "portal/manage/_user_status.html" %}</td>
+            <td class="num">{{ person.progress.total|default:0 }}{% if person.max_load %}<span class="muted"> / {{ person.max_load }}</span>{% endif %}</td>
+            <td class="num">{{ person.progress.submitted|default:0 }}</td>
+            <td class="small">{% if person.is_onboarded %}{% for p in person.attestation.conflict_prompts.all %}<span class="chip">#{{ p.number }}</span> {% empty %}<span class="muted">{% translate "None" %}</span>{% endfor %}{% else %}<span class="muted">—</span>{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table></div>
+      {% else %}<div class="empty">{% translate "No judges yet. Invite the first one with the form on this page." %}</div>{% endif %}
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Administrators" %} <span class="muted">({{ admins|length }})</span></h2></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>{% translate "Name" %}</th><th>{% translate "Status" %}</th><th>{% translate "Last sign-in" %}</th></tr></thead>
+        <tbody>
+        {% for person in admins %}
+          <tr>
+            <td><a href="{% url 'manage_user' person.pk %}">{{ person.full_name }}</a><div class="small muted">{{ person.email }}</div></td>
+            <td>{% include "portal/manage/_user_status.html" %}</td>
+            <td class="small muted">{% if person.last_login %}{{ person.last_login|date:"SHORT_DATETIME_FORMAT" }}{% else %}—{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table></div>
+      <div class="card-foot small muted">{% translate "Administrators can see author identities and every score. They are not assigned essays." %}</div>
+    </div>
+  </div>
+
+  <form method="post" class="card" novalidate>{% csrf_token %}
+    <div class="card-head"><h2>{% translate "Invite someone" %}</h2></div>
+    <div class="card-body">
+      {% include "portal/_form_errors.html" %}
+      {% include "portal/_field.html" with field=form.full_name %}
+      {% include "portal/_field.html" with field=form.email %}
+      {% include "portal/_field.html" with field=form.affiliation %}
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.role %}
+        {% include "portal/_field.html" with field=form.language %}
+      </div>
+      {% include "portal/_field.html" with field=form.max_load %}
+      <button class="btn btn-primary" type="submit" style="width:100%">{% if email_configured %}{% translate "Send invitation" %}{% else %}{% translate "Create invitation" %}{% endif %}</button>
+      {% if not email_configured %}<p class="small muted" style="margin:10px 0 0">{% translate "You will get the invitation as a ready-written message to send from your own email." %}</p>{% endif %}
+    </div>
+  </form>
+</div>
+{% endblock %}

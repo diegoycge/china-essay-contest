@@ -1,0 +1,13 @@
+.venv/
+.env
+db.sqlite3
+media/
+staticfiles/
+__pycache__/
+*.pyc
+.ruff_cache/
+.DS_Store
+
+# Committee working documents: kept in this folder, not published.
+*.docx
+*.xlsx

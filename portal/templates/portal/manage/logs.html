@@ -1,0 +1,31 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Logs" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Logs" %}</h1><p>{% translate "A record of who did what, for the integrity of the contest." %}</p></div></div>
+{% if tab == "email" and not email_configured %}<div class="notice warn">{% translate "Email is not configured on this server, so nothing is being sent." %}</div>{% endif %}
+<div class="card">
+  <div class="card-head">
+    <div class="tabs">
+      <a href="?tab=audit" class="{% if tab == 'audit' %}active{% endif %}">{% translate "Activity" %}</a>
+      <a href="?tab=email" class="{% if tab == 'email' %}active{% endif %}">{% translate "Email" %}</a>
+    </div>
+  </div>
+  <div class="table-wrap"><table>
+    {% if tab == "audit" %}
+    <thead><tr><th>{% translate "When" %}</th><th>{% translate "Who" %}</th><th>{% translate "Action" %}</th><th>{% translate "Subject" %}</th><th>{% translate "Detail" %}</th><th>IP</th></tr></thead>
+    <tbody>{% for entry in page %}<tr>
+      <td class="small nowrap">{{ entry.created_at|date:"SHORT_DATETIME_FORMAT" }}</td><td>{{ entry.actor.full_name|default:"—" }}</td>
+      <td class="mono">{{ entry.action }}</td><td class="mono">{{ entry.target }}</td><td class="small">{{ entry.detail|truncatechars:120 }}</td><td class="mono muted">{{ entry.ip }}</td>
+    </tr>{% empty %}<tr><td colspan="6" class="empty">{% translate "Nothing yet." %}</td></tr>{% endfor %}</tbody>
+    {% else %}
+    <thead><tr><th>{% translate "When" %}</th><th>{% translate "To" %}</th><th>{% translate "Type" %}</th><th>{% translate "Subject" %}</th><th>{% translate "Delivered" %}</th></tr></thead>
+    <tbody>{% for entry in page %}<tr>
+      <td class="small nowrap">{{ entry.created_at|date:"SHORT_DATETIME_FORMAT" }}</td><td>{{ entry.to }}</td><td class="mono">{{ entry.kind }}</td><td>{{ entry.subject }}</td>
+      <td>{% if entry.ok %}<span class="badge badge-ok">{% translate "Sent" %}</span>{% else %}<span class="badge badge-danger" title="{{ entry.error }}">{% translate "Failed" %}</span>{% endif %}</td>
+    </tr>{% empty %}<tr><td colspan="5" class="empty">{% translate "Nothing yet." %}</td></tr>{% endfor %}</tbody>
+    {% endif %}
+  </table></div>
+  {% with querystring="tab="|add:tab %}{% include "portal/_pagination.html" %}{% endwith %}
+</div>
+{% endblock %}

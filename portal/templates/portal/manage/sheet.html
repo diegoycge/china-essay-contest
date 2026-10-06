@@ -1,0 +1,50 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{{ row.essay.code }} · {{ row.judge.full_name }}{% endblock %}
+{% block container_class %}narrow{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="small" style="margin:0 0 6px"><a href="{% url 'manage_essay' row.essay.pk %}">← {{ row.essay.code }}</a></p>
+    <h1>{% translate "Judging sheet" %}</h1>
+    <p>{{ row.judge.full_name }} · {{ row.get_round_display }} · {% assignment_badge row %}{% if row.submitted_at %} · {{ row.submitted_at|date:"DATETIME_FORMAT" }}{% endif %}</p>
+  </div>
+  {% if row.status == "submitted" %}
+  <form method="post" data-confirm="{% translate 'Reopen this sheet so the judge can change and resubmit it? Its scores stop counting until then.' %}">{% csrf_token %}
+    <button class="btn" name="action" value="reopen">{% translate "Reopen for the judge" %}</button>
+  </form>
+  {% endif %}
+</div>
+{% if not sheet %}
+  <div class="card"><div class="empty">{% translate "The judge has not started this sheet." %}</div></div>
+{% else %}
+<div class="stack">
+  {% if row.status != "submitted" %}<div class="notice warn">{% translate "This is a draft. It has not been submitted and does not count towards the result." %}</div>{% endif %}
+  <div class="card"><div class="card-body">
+    <div class="sheet-summary">
+      <div><b>{{ sheet.total|score:1 }}</b><span>{% translate "Total / 40" %}</span></div>
+      <div><b>{{ sheet.average|score:2 }}</b><span>{% translate "Average / 10" %}</span></div>
+      <div><b>{{ words }}</b><span>{% translate "Words written" %}</span></div>
+    </div>
+  </div></div>
+  {% for c in criteria %}
+  <div class="card">
+    <div class="card-head"><h2>{{ c.name }}</h2><span class="big-score">{{ c.score|score:1 }}</span></div>
+    <div class="card-body"><p class="readonly-text">{{ c.comment|default:"—" }}</p></div>
+  </div>
+  {% endfor %}
+  {% if sheet.overall_comment %}
+  <div class="card"><div class="card-head"><h2>{% translate "Overall comments" %}</h2></div><div class="card-body"><p class="readonly-text">{{ sheet.overall_comment }}</p></div></div>
+  {% endif %}
+  <div class="card"><div class="card-head"><h2>{% translate "Flags and confirmation" %}</h2></div><div class="card-body">
+    <dl class="kv">
+      <dt>{% translate "Suspected plagiarism" %}</dt><dd>{{ sheet.plagiarism_suspected|yesno:_("Yes,No") }}</dd>
+      <dt>{% translate "Referred: AI markers" %}</dt><dd>{{ sheet.refer_ai_markers|yesno:_("Yes,No") }}</dd>
+      <dt>{% translate "Referred: other" %}</dt><dd>{{ sheet.refer_other|yesno:_("Yes,No") }}</dd>
+      {% if sheet.flag_notes %}<dt>{% translate "Notes on flags" %}</dt><dd>{{ sheet.flag_notes|linebreaksbr }}</dd>{% endif %}
+      <dt>{% translate "Signature" %}</dt><dd>{% if sheet.confirmed %}{{ sheet.signature }}{% else %}—{% endif %}</dd>
+    </dl>
+  </div></div>
+</div>
+{% endif %}
+{% endblock %}

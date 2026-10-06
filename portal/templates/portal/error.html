@@ -1,0 +1,12 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{{ code }}{% endblock %}
+{% block content %}
+<div class="error-page">
+  <div>
+    <b>{{ code }}</b>
+    <h1>{% if code == 403 %}{% translate "You do not have access to this page." %}{% else %}{% translate "Page not found." %}{% endif %}</h1>
+    <p class="muted" style="margin-top:10px"><a href="{% url 'home' %}">{% translate "Back to the start page" %}</a></p>
+  </div>
+</div>
+{% endblock %}

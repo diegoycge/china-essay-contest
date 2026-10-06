@@ -1,0 +1,2370 @@
+# Simplified Chinese interface strings for the judging portal.
+# Edit msgstr values, then run: python manage.py compilemessages
+msgid ""
+msgstr ""
+"Project-Id-Version: judging-portal\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-05 21:31-0400\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_Hans\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "Email"
+msgstr "邮箱"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "New password"
+msgstr "新密码"
+
+msgid "Repeat password"
+msgstr "再次输入密码"
+
+msgid "The two passwords do not match."
+msgstr "两次输入的密码不一致。"
+
+msgid "Current password"
+msgstr "当前密码"
+
+msgid "That is not your current password."
+msgstr "当前密码不正确。"
+
+msgid "Full name"
+msgstr "姓名"
+
+msgid "Affiliation"
+msgstr "所属机构"
+
+msgid "I have read the judging rubric carefully and will apply it as written."
+msgstr "我已仔细阅读评分标准，并将严格按照标准评审。"
+
+msgid ""
+"I have no significant personal beliefs on any essay question that would "
+"hinder my ability to judge fairly, other than those I have declared below."
+msgstr "除下方已申明的题目外，我对任何征文题目都没有会妨碍我公正评审的强烈个人立场。"
+
+msgid "Essay questions on which I hold significant personal beliefs"
+msgstr "我持有强烈个人立场的征文题目"
+
+msgid "Anything else the committee should know (optional)"
+msgstr "需要委员会了解的其他情况（选填）"
+
+msgid "Type your full name to sign"
+msgstr "输入您的全名以签署"
+
+msgid "Role"
+msgstr "角色"
+
+msgid "Language for emails"
+msgstr "邮件语言"
+
+msgid "Maximum essays (optional)"
+msgstr "最多分配篇数（选填）"
+
+msgid "Someone with this email already has an account."
+msgstr "该邮箱已有账号。"
+
+msgid "Number"
+msgstr "编号"
+
+msgid "Division"
+msgstr "组别"
+
+msgid "Short title"
+msgstr "简短标题"
+
+msgid "Short title (Chinese)"
+msgstr "简短标题（中文）"
+
+msgid "Full question"
+msgstr "完整题目"
+
+msgid "Full question (Chinese)"
+msgstr "完整题目（中文）"
+
+msgid "Active"
+msgstr "启用"
+
+msgid "Prompt"
+msgstr "题目"
+
+msgid "Author name"
+msgstr "作者姓名"
+
+msgid "Author email"
+msgstr "作者邮箱"
+
+msgid "School"
+msgstr "学校"
+
+msgid "Author is a"
+msgstr "作者身份"
+
+msgid "Committee notes"
+msgstr "委员会备注"
+
+msgid "— not set —"
+msgstr "— 未设置 —"
+
+msgid "— not recorded —"
+msgstr "— 未登记 —"
+
+msgid "Judged in"
+msgstr "参评组别"
+
+msgid ""
+"Follows the prompt: an essay answering Prompts IV–VI is judged in the "
+"undergraduate category even if a high school student wrote it."
+msgstr "随题目而定：回答题目 IV–VI 的文章在本科组参评，即使作者是高中生。"
+
+msgid "Contest name"
+msgstr "比赛名称"
+
+msgid "Contact address shown to judges"
+msgstr "向评委显示的联系邮箱"
+
+msgid "Essay word limit"
+msgstr "文章字数上限"
+
+msgid "Judging deadline"
+msgstr "评审截止时间"
+
+msgid "Re-score deadline"
+msgstr "复评截止时间"
+
+msgid "Send reminders this many days before a deadline"
+msgstr "在截止日期前多少天发送提醒"
+
+msgid "Human readers per essay"
+msgstr "每篇文章的人工评委人数"
+
+msgid "Divergence threshold (points)"
+msgstr "分歧阈值（分）"
+
+msgid "Final score when an essay has been re-scored"
+msgstr "文章经复评后的最终得分"
+
+msgid "Minimum words of justification"
+msgstr "评语最少词数"
+
+msgid "Invitation links expire after (days)"
+msgstr "邀请链接有效期（天）"
+
+msgid "Comma-separated, for example 3,1. Leave empty to send none."
+msgstr "用逗号分隔，例如 3,1。留空则不发送提醒。"
+
+msgid ""
+"An essay is flagged for re-scoring when the gap between any two readers' "
+"average scores is at least this large."
+msgstr "当任意两位评委的平均分差距达到或超过该值时，文章将被标记为需要复评。"
+
+msgid ""
+"When empty, the judging deadline applies until it has passed; after that re-"
+"scores have no deadline."
+msgstr "留空时，在评审截止时间之前沿用该截止时间；截止时间过后，复评不设截止时间。"
+
+msgid "Use whole numbers separated by commas."
+msgstr "请使用以逗号分隔的整数。"
+
+msgid "Use steps of 0.5."
+msgstr "请以 0.5 为单位。"
+
+msgid "The PDF is password-protected."
+msgstr "该 PDF 设有密码保护。"
+
+#, python-format
+msgid "The PDF has more than %(n)s pages."
+msgstr "该 PDF 超过 %(n)s 页。"
+
+msgid "The PDF contains far more text than an essay."
+msgstr "该 PDF 的文本量远超一篇文章。"
+
+msgid "The PDF took too long or too much memory to process."
+msgstr "处理该 PDF 耗时过长或占用内存过多。"
+
+msgid "The file is not a readable PDF."
+msgstr "该文件不是可读取的 PDF。"
+
+msgid "there are no pages left to release"
+msgstr "没有可发放的页面"
+
+msgid ""
+"another upload has the same file name, so the author on record may be wrong "
+"(open the essay, check the author details and save them)"
+msgstr "另有一份上传文件与其同名，登记的作者可能有误（请打开文章，核对并保存作者信息）"
+
+msgid "the author’s full name is still on the pages"
+msgstr "页面上仍有作者的全名"
+
+msgid "the author’s email address is still on the pages"
+msgstr "页面上仍有作者的邮箱地址"
+
+msgid "an email address is still on the pages"
+msgstr "页面上仍有邮箱地址"
+
+msgid "the author’s school is still on the pages"
+msgstr "页面上仍有作者的学校"
+
+msgid ""
+"this PDF has little or no readable text (it may be a scan), so nothing could"
+" be checked automatically"
+msgstr "该 PDF 几乎没有可读取的文本（可能是扫描件），因此无法自动检查"
+
+msgid "High school"
+msgstr "高中组"
+
+msgid "Undergraduate"
+msgstr "本科组"
+
+msgid "Admin"
+msgstr "管理员"
+
+msgid "Judge"
+msgstr "评委"
+
+msgid "Average of all readers"
+msgstr "所有评委的平均分"
+
+msgid "Average of the two closest readers"
+msgstr "分数最接近的两位评委的平均分"
+
+msgid "Both divisions"
+msgstr "两个组别"
+
+msgid "File could not be processed"
+msgstr "文件无法处理"
+
+msgid "Needs anonymization review"
+msgstr "待匿名化审核"
+
+msgid "Released to judges"
+msgstr "已发放给评委"
+
+msgid "Disqualified"
+msgstr "已取消资格"
+
+msgid "Withdrawn"
+msgstr "已撤回"
+
+msgid "Initial"
+msgstr "初评"
+
+msgid "Re-score"
+msgstr "复评"
+
+msgid "Not started"
+msgstr "未开始"
+
+msgid "In progress"
+msgstr "进行中"
+
+msgid "Submitted"
+msgstr "已提交"
+
+msgid "Recused"
+msgstr "已回避"
+
+msgid "Removed"
+msgstr "已移除"
+
+msgid "Unambiguous AI markers"
+msgstr "明确无误的 AI 痕迹"
+
+msgid "Personal standpoint — recused"
+msgstr "个人立场——已回避"
+
+msgid "Suspected plagiarism"
+msgstr "涉嫌抄袭"
+
+msgid "Other"
+msgstr "其他"
+
+msgid ""
+"This is an automated message from the judging portal. Please do not forward "
+"it."
+msgstr "这是评审系统自动发送的邮件，请勿转发。"
+
+msgid "an administrator"
+msgstr "管理员"
+
+msgid "a judge"
+msgstr "评委"
+
+#, python-format
+msgid "Invitation to the %(contest)s judging portal"
+msgstr "%(contest)s评审系统邀请"
+
+#, python-format
+msgid ""
+"Dear %(name)s,\n"
+"\n"
+"You have been invited to join the judging portal of the %(contest)s as %(role)s.\n"
+"\n"
+"Open this link to set up your sign-in. You can use a passkey (your fingerprint, face or device PIN) or choose a password:\n"
+"%(link)s\n"
+"\n"
+"The link works once and expires in %(days)s days. Please do not forward it."
+msgstr ""
+"%(name)s，您好：\n"
+"\n"
+"诚邀您以%(role)s身份加入%(contest)s的评审系统。\n"
+"\n"
+"请打开以下链接设置登录方式。您可以使用通行密钥（指纹、面容或设备 PIN），也可以设置密码：\n"
+"%(link)s\n"
+"\n"
+"该链接只能使用一次，%(days)s 天后失效。请勿转发。"
+
+msgid "Set up your judging portal sign-in again"
+msgstr "重新设置您的评审系统登录方式"
+
+#, python-format
+msgid ""
+"Dear %(name)s,\n"
+"\n"
+"Use this link to create a new passkey or choose a new password:\n"
+"%(link)s\n"
+"\n"
+"The link works once and expires in 24 hours. If you did not ask for it, you can ignore this message."
+msgstr ""
+"%(name)s，您好：\n"
+"\n"
+"请通过以下链接创建新的通行密钥或设置新密码：\n"
+"%(link)s\n"
+"\n"
+"该链接只能使用一次，24 小时后失效。如果这不是您本人的操作，请忽略本邮件。"
+
+#, python-format
+msgid "%(count)s new essay to judge"
+msgid_plural "%(count)s new essays to judge"
+msgstr[0] "您有 %(count)s 篇新文章待评审"
+
+#, python-format
+msgid ""
+"Dear %(name)s,\n"
+"\n"
+"%(count)s essay has been assigned to you for the %(contest)s."
+msgid_plural ""
+"Dear %(name)s,\n"
+"\n"
+"%(count)s essays have been assigned to you for the %(contest)s."
+msgstr[0] ""
+"%(name)s，您好：\n"
+"\n"
+"%(contest)s已向您分配了 %(count)s 篇文章。"
+
+#, python-format
+msgid "Please submit your scores by %(deadline)s."
+msgstr "请在 %(deadline)s 之前提交评分。"
+
+#, python-format
+msgid ""
+"Sign in to begin:\n"
+"%(link)s"
+msgstr ""
+"登录后开始评审：\n"
+"%(link)s"
+
+#, python-format
+msgid "Essay %(code)s referred to the committee chair"
+msgstr "文章 %(code)s 已转交委员会主席处理"
+
+#, python-format
+msgid ""
+"A judge has referred essay %(code)s (%(kind)s) in the %(contest)s.\n"
+"\n"
+"Review it here:\n"
+"%(link)s"
+msgstr ""
+"在%(contest)s中，有评委将文章 %(code)s 转交主席处理（%(kind)s）。\n"
+"\n"
+"请在此查看：\n"
+"%(link)s"
+
+#, python-format
+msgid "Overdue: %(count)s essay(s) still to score"
+msgstr "已逾期：仍有 %(count)s 篇文章待评分"
+
+#, python-format
+msgid ""
+"The judging deadline (%(deadline)s) has passed and %(count)s of your "
+"assigned essay(s) have not been submitted."
+msgstr "评审截止时间（%(deadline)s）已过，您还有 %(count)s 篇已分配的文章尚未提交。"
+
+#, python-format
+msgid "Reminder: %(count)s essay(s) to score by %(deadline)s"
+msgstr "提醒：请在 %(deadline)s 前完成 %(count)s 篇文章的评分"
+
+#, python-format
+msgid ""
+"You have %(count)s essay(s) still to score. The deadline is %(deadline)s."
+msgstr "您还有 %(count)s 篇文章待评分，截止时间为 %(deadline)s。"
+
+#, python-format
+msgid "Dear %(name)s,"
+msgstr "%(name)s，您好："
+
+#, python-format
+msgid ""
+"Sign in to continue:\n"
+"%(link)s"
+msgstr ""
+"登录后继续：\n"
+"%(link)s"
+
+#, python-format
+msgid "Reminder: %(count)s essay(s) still to score"
+msgstr "提醒：仍有 %(count)s 篇文章待评分"
+
+#, python-format
+msgid "You have %(count)s essay(s) still to score."
+msgstr "您还有 %(count)s 篇文章待评分。"
+
+#, python-format
+msgid "New essays to judge: %(contest)s"
+msgstr "新文章待评审：%(contest)s"
+
+#, python-format
+msgid ""
+"Dear judge,\n"
+"\n"
+"New essays have been assigned to you for the %(contest)s."
+msgstr ""
+"评委您好：\n"
+"\n"
+"%(contest)s已向您分配了新的文章。"
+
+#, python-format
+msgid "Reminder: essays still to score for the %(contest)s"
+msgstr "提醒：%(contest)s仍有文章待评分"
+
+#, python-format
+msgid ""
+"Dear judge,\n"
+"\n"
+"A reminder that you still have essays to score for the %(contest)s."
+msgstr ""
+"评委您好：\n"
+"\n"
+"提醒您，%(contest)s仍有文章等待您评分。"
+
+#, python-format
+msgid "The deadline is %(deadline)s."
+msgstr "截止时间为 %(deadline)s。"
+
+msgid "Yes"
+msgstr "是"
+
+msgid "No"
+msgstr "否"
+
+msgid "Rank"
+msgstr "排名"
+
+msgid "Essay ID"
+msgstr "文章编号"
+
+msgid "Final score"
+msgstr "最终得分"
+
+msgid "Readers submitted"
+msgstr "已提交评委数"
+
+msgid "Spread"
+msgstr "分差"
+
+msgid "Divergent"
+msgstr "存在分歧"
+
+msgid "Re-scored"
+msgstr "已复评"
+
+msgid "Finalist"
+msgstr "入围"
+
+msgid "Scoring complete"
+msgstr "评分已完成"
+
+#, python-format
+msgid "Reader %(n)s average"
+msgstr "评委 %(n)s 平均分"
+
+msgid "Judge email"
+msgstr "评委邮箱"
+
+msgid "Round"
+msgstr "轮次"
+
+msgid "Status"
+msgstr "状态"
+
+msgid "Total (of 40)"
+msgstr "总分（满分 40）"
+
+msgid "Average (of 10)"
+msgstr "平均分（满分 10）"
+
+#, python-format
+msgid "%(criterion)s — justification"
+msgstr "%(criterion)s——评语"
+
+msgid "Overall comments"
+msgstr "总体评语"
+
+msgid "Words written"
+msgstr "评语词数"
+
+msgid "Referred: AI markers"
+msgstr "转交主席：AI 痕迹"
+
+msgid "Referred: other"
+msgstr "转交主席：其他"
+
+msgid "Notes on flags"
+msgstr "标记说明"
+
+msgid "Signature"
+msgstr "签名"
+
+msgid "Submitted at"
+msgstr "提交时间"
+
+msgid "Author"
+msgstr "作者"
+
+msgid "Author’s level"
+msgstr "作者身份"
+
+msgid "Original file"
+msgstr "原始文件"
+
+msgid "Assigned"
+msgstr "已分配"
+
+msgid "Outstanding"
+msgstr "未完成"
+
+msgid "Statement signed"
+msgstr "声明签署时间"
+
+msgid "Declared conflicts"
+msgstr "已申明的利益冲突"
+
+msgid "Rankings"
+msgstr "排名"
+
+msgid "Scores and comments"
+msgstr "评分与评语"
+
+msgid "Judges"
+msgstr "评委"
+
+msgid "Author identities"
+msgstr "作者身份"
+
+msgid "Language"
+msgstr "语言"
+
+#, python-format
+msgid "Invitation for %(email)s"
+msgstr "%(email)s 的邀请"
+
+#, python-format
+msgid "Sign-in link for %(email)s"
+msgstr "%(email)s 的登录链接"
+
+msgid ""
+"It has been emailed. You can also send it yourself; the link is shown only "
+"once."
+msgstr "已通过邮件发送。您也可以自行发送；该链接仅显示这一次。"
+
+msgid ""
+"Nothing has been sent yet. Send this message from your own email: the button"
+" opens it in your mail app, already addressed. The link works once and is "
+"shown only now."
+msgstr "尚未发送任何内容。请用您自己的邮箱发送这封邮件：点击按钮即可在您的邮件应用中打开，收件人已填好。该链接只能使用一次，且仅在此刻显示。"
+
+msgid "Open in my email app"
+msgstr "在我的邮件应用中打开"
+
+msgid "Copy message"
+msgstr "复制邮件内容"
+
+msgid "Copy link only"
+msgstr "仅复制链接"
+
+msgid "Previous"
+msgstr "上一页"
+
+#, python-format
+msgid "Page %(n)s of %(total)s"
+msgstr "第 %(n)s 页，共 %(total)s 页"
+
+msgid "Next"
+msgstr "下一页"
+
+msgid "Waiting for your device…"
+msgstr "正在等待您的设备…"
+
+msgid "Cancelled, or your device did not respond. You can try again."
+msgstr "已取消，或设备没有响应。您可以重试。"
+
+msgid "This device already has a passkey for your account."
+msgstr "此设备上已有您账号的通行密钥。"
+
+msgid "That passkey is not registered with this portal."
+msgstr "该通行密钥未在本系统登记。"
+
+msgid "Too many failed attempts. Please wait a few minutes and try again."
+msgstr "失败次数过多。请等待几分钟后再试。"
+
+msgid "That did not work. Try again, or use a password instead."
+msgstr "操作未成功。请重试，或改用密码。"
+
+msgid "Judging portal"
+msgstr "评审系统"
+
+msgid "Account"
+msgstr "账号"
+
+msgid "Your details"
+msgstr "个人信息"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Passkeys"
+msgstr "通行密钥"
+
+msgid "Device"
+msgstr "设备"
+
+msgid "Added"
+msgstr "添加时间"
+
+msgid "Last used"
+msgstr "最近使用"
+
+msgid "Passkey"
+msgstr "通行密钥"
+
+msgid "Remove this passkey? You will no longer be able to sign in with it."
+msgstr "移除这个通行密钥？此后将无法再用它登录。"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid ""
+"A passkey lets you sign in with your fingerprint, face or device PIN instead"
+" of a password. Add one on each device you judge on."
+msgstr "通行密钥让您用指纹、面容或设备 PIN 登录，无需密码。请在您评审时使用的每台设备上各添加一个。"
+
+msgid "Add a passkey on this device"
+msgstr "在此设备上添加通行密钥"
+
+msgid "This browser cannot create passkeys."
+msgstr "此浏览器无法创建通行密钥。"
+
+msgid "Change password"
+msgstr "修改密码"
+
+msgid "Add a password"
+msgstr "添加密码"
+
+msgid ""
+"You sign in with a passkey. A password is optional; it gives you a second "
+"way in."
+msgstr "您目前使用通行密钥登录。密码是可选的，可作为另一种登录方式。"
+
+msgid "Reset password"
+msgstr "重置密码"
+
+msgid ""
+"This server cannot send email. Ask a committee administrator to generate a "
+"reset link for you."
+msgstr "本服务器无法发送邮件。请联系委员会管理员为您生成重置链接。"
+
+msgid ""
+"If that address belongs to an account, a reset link is on its way. It "
+"expires in 24 hours."
+msgstr "如果该邮箱已注册账号，重置链接已发出，24 小时内有效。"
+
+msgid "Enter the email address you sign in with and we will send you a link."
+msgstr "请输入您登录所用的邮箱，我们会向您发送链接。"
+
+msgid "Send reset link"
+msgstr "发送重置链接"
+
+msgid "Back to sign in"
+msgstr "返回登录"
+
+msgid "Link no longer valid"
+msgstr "链接已失效"
+
+msgid "This link is no longer valid"
+msgstr "该链接已失效"
+
+msgid ""
+"Invitation links work once and expire. If you have already created your "
+"account, sign in instead. Otherwise ask the committee to send a new "
+"invitation."
+msgstr "邀请链接只能使用一次，且有有效期。如果您已创建账号，请直接登录；否则请联系委员会重新发送邀请。"
+
+msgid ""
+"Password reset links work once and expire after 24 hours. Request a new one."
+msgstr "密码重置链接只能使用一次，24 小时后失效。请重新申请。"
+
+msgid "Sign in"
+msgstr "登录"
+
+msgid "Sign in with a passkey"
+msgstr "使用通行密钥登录"
+
+msgid "or with your password"
+msgstr "或使用密码登录"
+
+msgid "Can’t sign in?"
+msgstr "无法登录？"
+
+msgid ""
+"Accounts are created by invitation. If you are a judge and have not received"
+" a link, contact the committee."
+msgstr "账号仅通过邀请创建。如果您是评委但尚未收到链接，请联系委员会。"
+
+msgid "Set up your sign-in"
+msgstr "设置登录方式"
+
+#, python-format
+msgid "Welcome, %(name)s"
+msgstr "欢迎您，%(name)s"
+
+#, python-format
+msgid "Choose how you will sign in as %(email)s."
+msgstr "请选择以 %(email)s 登录的方式。"
+
+msgid "Set up your sign-in again"
+msgstr "重新设置登录方式"
+
+msgid "Create a new passkey or choose a new password."
+msgstr "创建新的通行密钥，或设置新密码。"
+
+msgid "Use a passkey"
+msgstr "使用通行密钥"
+
+msgid "Recommended"
+msgstr "推荐"
+
+msgid ""
+"Sign in with your fingerprint, face or device PIN. There is no password to "
+"remember, and it cannot be guessed or phished. Use the device you will judge"
+" on."
+msgstr "用指纹、面容或设备 PIN 登录。无需记住密码，也无法被猜出或被钓鱼网站骗取。请在您评审时使用的设备上操作。"
+
+msgid "Create a passkey"
+msgstr "创建通行密钥"
+
+msgid "or use a password"
+msgstr "或使用密码"
+
+msgid ""
+"This browser cannot create passkeys, so choose a password. (If you opened "
+"this link inside another app, opening it in Safari, Chrome or Edge may offer"
+" passkeys.)"
+msgstr ""
+"此浏览器无法创建通行密钥，请设置密码。（如果您是在其他应用内打开此链接，改用 Safari、Chrome 或 Edge 打开可能会支持通行密钥。）"
+
+msgid ""
+"At least 10 characters. Avoid common passwords and anything based on your "
+"name or email."
+msgstr "至少 10 个字符。请避免使用常见密码，以及与您的姓名或邮箱相关的内容。"
+
+msgid "Create account with a password"
+msgstr "用密码创建账号"
+
+msgid "Save password"
+msgstr "保存密码"
+
+msgid "Main"
+msgstr "主导航"
+
+msgid "My essays"
+msgstr "我的文章"
+
+msgid "Rubric"
+msgstr "评分标准"
+
+msgid "Sign out"
+msgstr "退出登录"
+
+msgid "You do not have access to this page."
+msgstr "您无权访问此页面。"
+
+msgid "Page not found."
+msgstr "页面不存在。"
+
+msgid "Back to the start page"
+msgstr "返回首页"
+
+msgid "This year’s contest"
+msgstr "本届比赛"
+
+msgid "What contestants were asked to do, from the contest website."
+msgstr "参赛者收到的要求，摘自比赛网站。"
+
+msgid "Questions about the contest or this portal:"
+msgstr "有关比赛或本系统的问题，请联系："
+
+msgid "Essay prompts"
+msgstr "征文题目"
+
+msgid "Category"
+msgstr "组别"
+
+msgid "General instructions"
+msgstr "总体说明"
+
+msgid "Score ranges"
+msgstr "分数范围"
+
+msgid "A note on AI and plagiarism"
+msgstr "关于 AI 与抄袭的说明"
+
+msgid "Criteria for scoring"
+msgstr "评分标准"
+
+msgid "Level"
+msgstr "等级"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Examples"
+msgstr "示例"
+
+msgid ""
+"Essays are anonymous. Please do not try to identify authors, and do not "
+"discuss your scores with other judges."
+msgstr "文章均已匿名。请勿试图辨认作者身份，也请勿与其他评委讨论您的评分。"
+
+msgid "To score"
+msgstr "待评分"
+
+msgid "Deadline"
+msgstr "截止时间"
+
+msgid "The deadline has passed — please submit as soon as you can."
+msgstr "截止时间已过——请尽快提交。"
+
+#, python-format
+msgid "%(until)s left"
+msgstr "剩余 %(until)s"
+
+msgid "No deadline has been set yet."
+msgstr "尚未设置截止时间。"
+
+#, python-format
+msgid "%(n)s page"
+msgid_plural "%(n)s pages"
+msgstr[0] "%(n)s 页"
+
+#, python-format
+msgid "%(n)s word"
+msgid_plural "%(n)s words"
+msgstr[0] "%(n)s 词"
+
+msgid "Continue"
+msgstr "继续"
+
+msgid "Read and score"
+msgstr "阅读并评分"
+
+msgid "All done — thank you. Nothing is waiting for you."
+msgstr "全部完成——感谢您！目前没有待处理的文章。"
+
+msgid ""
+"No essays have been assigned to you yet. You will receive an email when they"
+" are."
+msgstr "尚未向您分配文章。分配后您会收到邮件通知。"
+
+msgid "Your average"
+msgstr "您的平均分"
+
+msgid "View"
+msgstr "查看"
+
+msgid "Before you begin"
+msgstr "开始之前"
+
+msgid ""
+"Please read the rubric below in full, then sign the statement at the end of "
+"the page. You will be able to open your assigned essays once it is signed."
+msgstr "请完整阅读下方的评分标准，然后在页面底部签署声明。签署后即可打开分配给您的文章。"
+
+msgid "Judge’s statement"
+msgstr "评委声明"
+
+msgid ""
+"Tick any question on which your personal standpoint could affect your "
+"judgement. You will not be assigned essays answering those questions. Leave "
+"all unticked if none apply."
+msgstr "如果您在某道题目上的个人立场可能影响您的判断，请勾选该题目。系统不会向您分配回答这些题目的文章。如无此类情况，请全部留空。"
+
+msgid "Date"
+msgstr "日期"
+
+msgid "Sign and continue"
+msgstr "签署并继续"
+
+msgid "Judging rubric"
+msgstr "评分标准"
+
+msgid "The same criteria appear beside every essay while you score."
+msgstr "评分时，每篇文章旁边都会显示同样的标准。"
+
+msgid "Pages"
+msgstr "页面"
+
+msgid "Text"
+msgstr "文本"
+
+msgid "Zoom out"
+msgstr "缩小"
+
+msgid "Zoom in"
+msgstr "放大"
+
+#, python-format
+msgid "Page %(n)s"
+msgstr "第 %(n)s 页"
+
+msgid ""
+"A plain-text copy of the same pages, for selecting a reference or searching."
+" Line breaks follow the original; redacted words are left out."
+msgstr "同一批页面的纯文本副本，便于选取引用或搜索。换行与原文一致；被遮盖的词语不包含在内。"
+
+msgid "This essay has no text copy; please read the pages."
+msgstr "这篇文章没有文本副本，请阅读页面。"
+
+msgid "Saving…"
+msgstr "正在保存…"
+
+msgid "Draft saved at"
+msgstr "草稿已保存于"
+
+msgid "Unsaved changes"
+msgstr "有未保存的修改"
+
+msgid "Could not save — check your connection."
+msgstr "保存失败——请检查网络连接。"
+
+msgid "Submit this sheet? You will not be able to change it afterwards."
+msgstr "确认提交这份评分表？提交后将无法修改。"
+
+msgid "more needed"
+msgstr "还需"
+
+#, python-format
+msgid ""
+"Submitted on %(when)s. This sheet is locked; contact the committee if it "
+"needs to be reopened."
+msgstr "已于 %(when)s 提交。评分表已锁定；如需重新开放，请联系委员会。"
+
+msgid "Your draft is saved, but the sheet cannot be submitted yet:"
+msgstr "草稿已保存，但评分表暂时无法提交："
+
+msgid "score"
+msgstr "分数"
+
+msgid "Scoring guide"
+msgstr "评分指南"
+
+msgid "justification"
+msgstr "评语"
+
+msgid "words"
+msgstr "词"
+
+msgid "Optional"
+msgstr "选填"
+
+msgid ""
+"Summary judgement, comparison with the rest of the division, or anything the"
+" criteria do not capture."
+msgstr "总体判断、与同组别其他文章的比较，或评分标准未涵盖的任何内容。"
+
+msgid "Flags and referral to the committee chair"
+msgstr "标记与转交委员会主席"
+
+msgid "I suspect plagiarism in this essay"
+msgstr "我怀疑这篇文章存在抄袭"
+
+msgid ""
+"Refer: unambiguous AI markers (e.g. fabricated citations, assistant-style "
+"phrasing, model-formatted title page)"
+msgstr "转交主席：明确无误的 AI 痕迹（例如捏造的引文、AI 助手式措辞、模型生成格式的标题页）"
+
+msgid "Refer: other reason"
+msgstr "转交主席：其他原因"
+
+msgid ""
+"Required if any box is ticked: identify the passage(s) and your reason."
+msgstr "勾选任何一项时必填：请指出相关段落并说明理由。"
+
+msgid "Total / 40"
+msgstr "总分 / 40"
+
+msgid "Average / 10"
+msgstr "平均分 / 10"
+
+#, python-format
+msgid "Words (min. %(min_words)s)"
+msgstr "词数（至少 %(min_words)s）"
+
+msgid "Type your name to sign"
+msgstr "输入您的姓名以签署"
+
+msgid "I cannot judge this essay fairly"
+msgstr "我无法公正评审这篇文章"
+
+msgid ""
+"If your personal standpoint on the issue hinders your ability to judge this "
+"essay fairly, return it here. It will go to the committee chair for "
+"reassignment and disappear from your list. Your draft scores will not count."
+msgstr "如果您在该议题上的个人立场妨碍您公正评审这篇文章，请在此退回。文章将交由委员会主席重新分配，并从您的列表中消失。您的草稿分数不会计入结果。"
+
+msgid "Reason (seen only by the committee)"
+msgstr "理由（仅委员会可见）"
+
+msgid "Return essay to the chair"
+msgstr "将文章退回主席"
+
+msgid "Back to my essays"
+msgstr "返回我的文章"
+
+msgid "Save draft"
+msgstr "保存草稿"
+
+msgid "Submit sheet"
+msgstr "提交评分表"
+
+#, python-format
+msgid "Write to %(n)s judge (%(language)s)"
+msgid_plural "Write to %(n)s judges (%(language)s)"
+msgstr[0] "写给 %(n)s 位评委（%(language)s）"
+
+msgid "Or copy it into another app"
+msgstr "或复制到其他应用中"
+
+msgid "Addresses"
+msgstr "邮箱地址"
+
+msgid "Message"
+msgstr "邮件内容"
+
+msgid "Progress"
+msgstr "进度"
+
+msgid "Last active"
+msgstr "最近活动"
+
+msgid "Deactivated"
+msgstr "已停用"
+
+msgid "Invited"
+msgstr "已邀请"
+
+msgid "Statement unsigned"
+msgstr "未签署声明"
+
+#, python-format
+msgid "%(n)s overdue"
+msgstr "%(n)s 篇逾期"
+
+msgid "No judges yet."
+msgstr "尚无评委。"
+
+msgid "Invite judges"
+msgstr "邀请评委"
+
+msgid "Committee"
+msgstr "委员会"
+
+msgid "Overview"
+msgstr "概览"
+
+msgid "Dashboard"
+msgstr "总览"
+
+msgid "Essays"
+msgstr "文章"
+
+msgid "All essays"
+msgstr "全部文章"
+
+msgid "Upload"
+msgstr "上传"
+
+msgid "Anonymization review"
+msgstr "匿名化审核"
+
+msgid "Judging"
+msgstr "评审"
+
+msgid "Judges and admins"
+msgstr "评委与管理员"
+
+msgid "Assignments"
+msgstr "分配"
+
+msgid "Divergence and re-scores"
+msgstr "分歧与复评"
+
+msgid "Referrals"
+msgstr "转交事项"
+
+msgid "Results"
+msgstr "结果"
+
+msgid "Setup"
+msgstr "设置"
+
+msgid "Settings"
+msgstr "系统设置"
+
+msgid "Logs"
+msgstr "日志"
+
+#, python-format
+msgid ""
+"Each released essay needs %(n)s readers. Auto-assign picks them at random "
+"while keeping workloads level, and never gives a judge an essay on a prompt "
+"they declared a conflict with."
+msgstr "每篇已发放的文章需要 %(n)s 位评委。自动分配会随机选择评委并保持工作量均衡，且绝不会把文章分配给已对其题目申明利益冲突的评委。"
+
+#, python-format
+msgid ""
+"%(eligible_judges)s judges can receive essays. %(unsigned_judges)s more have"
+" not signed the judge’s statement yet, so their conflicts are unknown and "
+"they are skipped until they do."
+msgstr ""
+"目前有 %(eligible_judges)s 位评委可以接收文章。另有 %(unsigned_judges)s "
+"位尚未签署评委声明，其利益冲突情况未知，签署之前系统不会向其分配文章。"
+
+msgid "Open reader slots"
+msgstr "待填补的评委名额"
+
+#, python-format
+msgid "across %(slot_essays)s essays"
+msgstr "涉及 %(slot_essays)s 篇文章"
+
+#, python-format
+msgid "%(awaiting_release)s more essays await release"
+msgstr "另有 %(awaiting_release)s 篇文章等待发放"
+
+msgid "Email judges about their new essays"
+msgstr "通过邮件通知评委有新文章"
+
+msgid "Auto-assign now"
+msgstr "立即自动分配"
+
+msgid "Not yet announced"
+msgstr "尚未通知"
+
+msgid "assignments whose judge has not been emailed"
+msgstr "项分配尚未通过邮件通知评委"
+
+msgid "Email these judges"
+msgstr "邮件通知这些评委"
+
+msgid "I have told them: mark as announced"
+msgstr "我已通知他们：标记为已通知"
+
+msgid "Outstanding sheets"
+msgstr "未完成的评分表"
+
+msgid "Scheduled reminders go out automatically before each deadline."
+msgstr "系统会在每个截止日期前自动发送定时提醒。"
+
+msgid "Email every judge who still has essays to score?"
+msgstr "向所有仍有文章待评分的评委发送邮件？"
+
+msgid "Send a reminder now"
+msgstr "立即发送提醒"
+
+msgid "Remind the judges who still have essays to score, whenever you choose."
+msgstr "您可以随时提醒仍有文章待评分的评委。"
+
+msgid ""
+"This portal does not send email itself. The buttons above open a ready-"
+"written message in your own mail app, addressed to you with the judges in "
+"Bcc so they do not see one another."
+msgstr "本系统自身不发送邮件。上方按钮会在您自己的邮件应用中打开一封写好的邮件，收件人为您本人，评委在密送栏中，彼此不可见。"
+
+msgid "Workload"
+msgstr "工作量"
+
+msgid "Essays missing readers"
+msgstr "缺少评委的文章"
+
+msgid "Readers needed"
+msgstr "尚需评委数"
+
+msgid "Upload essays"
+msgstr "上传文章"
+
+msgid "Essays uploaded"
+msgstr "已上传文章"
+
+#, python-format
+msgid "%(released)s released to judges"
+msgstr "%(released)s 篇已发放给评委"
+
+msgid "Sheets submitted"
+msgstr "已提交的评分表"
+
+msgid "Essays fully scored"
+msgstr "评分全部完成的文章"
+
+#, python-format
+msgid "Passed — %(overdue_total)s sheets overdue"
+msgstr "已过期——%(overdue_total)s 份评分表逾期"
+
+msgid "Set a deadline"
+msgstr "设置截止时间"
+
+msgid "Needs attention"
+msgstr "待处理事项"
+
+msgid "Essays waiting for anonymization review"
+msgstr "等待匿名化审核的文章"
+
+msgid "Review"
+msgstr "审核"
+
+msgid "Files whose text could not be read"
+msgstr "无法读取文本的文件"
+
+msgid "Open"
+msgstr "打开"
+
+msgid "Released essays still missing readers"
+msgstr "已发放但仍缺评委的文章"
+
+msgid "Assign"
+msgstr "分配"
+
+msgid "Assignments not yet announced by email"
+msgstr "尚未邮件通知的分配"
+
+msgid "Notify"
+msgstr "通知"
+
+msgid "Divergent scores awaiting a re-score"
+msgstr "评分存在分歧、等待复评的文章"
+
+msgid "Open referrals from judges"
+msgstr "评委转交的未处理事项"
+
+msgid "Judges who have not signed the statement"
+msgstr "尚未签署声明的评委"
+
+msgid "By division"
+msgstr "按组别"
+
+msgid "fully scored"
+msgstr "已完成评分"
+
+#, python-format
+msgid "%(disqualified)s withdrawn or disqualified"
+msgstr "%(disqualified)s 篇已撤回或取消资格"
+
+msgid "Judge progress"
+msgstr "评委进度"
+
+msgid "Manage judges"
+msgstr "管理评委"
+
+#, python-format
+msgid ""
+"An essay appears here when the gap between any two initial readers’ average "
+"scores is %(t)s points or more. Assign one further reader to re-score it."
+msgstr "当任意两位初评评委的平均分相差 %(t)s 分或以上时，文章会出现在这里。请再指派一位评委进行复评。"
+
+msgid "Change the threshold"
+msgstr "修改阈值"
+
+msgid "Reader averages"
+msgstr "各评委平均分"
+
+msgid "Gap"
+msgstr "分差"
+
+msgid "Least-loaded eligible judge"
+msgstr "工作量最少的合格评委"
+
+msgid "Assign re-score"
+msgstr "指派复评"
+
+msgid "Re-score in progress"
+msgstr "复评进行中"
+
+msgid "Waiting for the initial readers"
+msgstr "等待初评评委"
+
+msgid "No essays have divergent scores."
+msgstr "没有评分存在分歧的文章。"
+
+msgid "See what judges see"
+msgstr "查看评委所见"
+
+msgid "Download original"
+msgstr "下载原始文件"
+
+msgid "Open referral"
+msgstr "未处理的转交事项"
+
+msgid "Readers and scores"
+msgstr "评委与评分"
+
+msgid "Provisional score"
+msgstr "暂定得分"
+
+msgid "Average"
+msgstr "平均分"
+
+msgid "View sheet"
+msgstr "查看评分表"
+
+msgid "Remove this assignment? Any scores it holds will stop counting."
+msgstr "移除这项分配？其中的评分将不再计入结果。"
+
+msgid "No judges assigned yet."
+msgstr "尚未分配评委。"
+
+#, python-format
+msgid "Initial readers are %(spread)s points apart."
+msgstr "初评评委的分数相差 %(spread)s 分。"
+
+msgid "Email the judge"
+msgstr "邮件通知评委"
+
+msgid "Assign reader"
+msgstr "指派评委"
+
+msgid ""
+"Only judges who have signed the statement, have not read this essay, have no"
+" declared conflict with its prompt, and are under their limit are listed."
+msgstr "此处只列出已签署声明、未读过该文章、未对其题目申明冲突且未达到上限的评委。"
+
+msgid "Release the essay from anonymization review before assigning judges."
+msgstr "请先在匿名化审核中发放文章，然后再分配评委。"
+
+msgid "Author and classification"
+msgstr "作者与分类"
+
+msgid "Never shown to judges"
+msgstr "绝不向评委显示"
+
+msgid "Uploaded"
+msgstr "上传时间"
+
+msgid "Released"
+msgstr "发放时间"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "Remove finalist status"
+msgstr "取消入围资格"
+
+msgid "Confirm as finalist"
+msgstr "确认为入围文章"
+
+#, python-format
+msgid "Confirmed by %(name)s on %(when)s"
+msgstr "由 %(name)s 于 %(when)s 确认"
+
+msgid "Are you sure?"
+msgstr "确定吗？"
+
+msgid "Restore essay"
+msgstr "恢复文章"
+
+msgid "Withdraw"
+msgstr "撤回"
+
+msgid "Disqualify"
+msgstr "取消资格"
+
+msgid "Delete this essay and its file permanently?"
+msgstr "永久删除这篇文章及其文件？"
+
+msgid "Delete essay"
+msgstr "删除文章"
+
+msgid ""
+"Author details on this page are visible to administrators only. Judges see "
+"the essay ID and the anonymized text."
+msgstr "本页的作者信息仅管理员可见。评委只能看到文章编号和匿名文本。"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Essay ID, author, school or file name"
+msgstr "文章编号、作者、学校或文件名"
+
+msgid "All"
+msgstr "全部"
+
+msgid "Filter"
+msgstr "筛选"
+
+msgid "Readers"
+msgstr "评委"
+
+msgid "Score"
+msgstr "得分"
+
+msgid "Provisional — not every reader has submitted"
+msgstr "暂定——尚有评委未提交"
+
+msgid "No essays match."
+msgstr "没有符合条件的文章。"
+
+msgid "A record of who did what, for the integrity of the contest."
+msgstr "记录谁在何时做了什么，以保障比赛的公正性。"
+
+msgid "Email is not configured on this server, so nothing is being sent."
+msgstr "本服务器未配置邮件，因此不会发送任何邮件。"
+
+msgid "Activity"
+msgstr "操作记录"
+
+msgid "When"
+msgstr "时间"
+
+msgid "Who"
+msgstr "操作人"
+
+msgid "Action"
+msgstr "操作"
+
+msgid "Subject"
+msgstr "对象"
+
+msgid "Detail"
+msgstr "详情"
+
+msgid "Nothing yet."
+msgstr "暂无记录。"
+
+msgid "To"
+msgstr "收件人"
+
+msgid "Type"
+msgstr "类型"
+
+msgid "Delivered"
+msgstr "发送状态"
+
+msgid "Sent"
+msgstr "已发送"
+
+msgid "Failed"
+msgstr "失败"
+
+msgid "What judges see"
+msgstr "评委所见"
+
+msgid ""
+"These are the released pages exactly as a judge gets them: flat images with "
+"the redactions burned in. Nothing lies underneath a black box."
+msgstr "这些是已发放的页面，与评委看到的完全一致：遮盖内容已直接绘入的平面图像。黑框之下没有任何内容。"
+
+msgid "Edit redactions"
+msgstr "编辑遮盖"
+
+msgid ""
+"This essay is not currently released; these are the pages from its last "
+"release."
+msgstr "这篇文章目前未发放；以下是上次发放时的页面。"
+
+msgid "Text judges can copy"
+msgstr "评委可复制的文本"
+
+msgid ""
+"The questions contestants could answer. Judges declare conflicts against "
+"this list before they start, so add the prompts before inviting judges."
+msgstr "参赛者可以选择回答的题目。评委在开始前会对照此列表申明利益冲突，因此请在邀请评委之前添加题目。"
+
+msgid "Conflicts"
+msgstr "利益冲突"
+
+msgid "Inactive"
+msgstr "未启用"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "No prompts yet."
+msgstr "尚无题目。"
+
+msgid "Edit prompt"
+msgstr "编辑题目"
+
+msgid "Add a prompt"
+msgstr "添加题目"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Delete this prompt?"
+msgstr "删除这道题目？"
+
+msgid "Delete"
+msgstr "删除"
+
+msgid ""
+"Essays that judges have referred to the committee chair: suspected AI "
+"markers or plagiarism, a recusal, or another concern."
+msgstr "评委转交委员会主席处理的文章：疑似 AI 痕迹或抄袭、评委回避，或其他问题。"
+
+msgid "Decision note (optional)"
+msgstr "处理说明（选填）"
+
+msgid "Reassign to another judge"
+msgstr "重新分配给其他评委"
+
+msgid "Close without reassigning"
+msgstr "关闭，不重新分配"
+
+msgid "Keep essay in the contest"
+msgstr "保留文章参赛资格"
+
+msgid "Disqualify this essay?"
+msgstr "取消这篇文章的参赛资格？"
+
+msgid "Disqualify essay"
+msgstr "取消文章资格"
+
+msgid "No open referrals."
+msgstr "没有未处理的转交事项。"
+
+msgid "Resolved"
+msgstr "已处理"
+
+msgid "Reason"
+msgstr "原因"
+
+msgid "Decision"
+msgstr "处理结果"
+
+msgid ""
+"Essays are ranked within their division by final score, once every assigned "
+"reader has submitted. The final score is the mean of the human readers’ "
+"average scores; for re-scored essays it follows the rule chosen in Settings."
+msgstr ""
+"在所有已分配评委提交评分后，文章按最终得分在各自组别内排名。最终得分为各人工评委平均分的均值；经过复评的文章按“系统设置”中选定的规则计算。"
+
+msgid "Export XLSX"
+msgstr "导出 XLSX"
+
+msgid "This export includes author names. Keep it away from judges. Continue?"
+msgstr "该导出文件包含作者姓名，请勿让评委接触。是否继续？"
+
+msgid "XLSX with identities"
+msgstr "含身份信息的 XLSX"
+
+msgid "Scores CSV"
+msgstr "评分 CSV"
+
+msgid "Rankings CSV"
+msgstr "排名 CSV"
+
+#, python-format
+msgid "%(n)s ranked"
+msgstr "%(n)s 篇已排名"
+
+#, python-format
+msgid "%(n)s still being scored"
+msgstr "%(n)s 篇仍在评分"
+
+#, python-format
+msgid "%(n)s finalists"
+msgstr "%(n)s 篇入围"
+
+msgid "Confirm"
+msgstr "确认"
+
+msgid "No fully scored essays in this division yet."
+msgstr "该组别尚无评分全部完成的文章。"
+
+msgid ""
+"marks a re-score reader. Hover over a score to see the judge; click it to "
+"open the sheet."
+msgstr "表示复评评委。将鼠标悬停在分数上可查看评委；点击可打开评分表。"
+
+#, python-format
+msgid "%(position)s of %(queue_total)s in the review queue"
+msgstr "审核队列第 %(position)s 篇，共 %(queue_total)s 篇"
+
+msgid ""
+"These are the essay’s own pages. Black boxes are what judges will not see. "
+"Click a box to switch it on or off, drag on a page to draw a new one, and "
+"leave out any page that is not part of the essay."
+msgstr "这些是文章的原始页面。黑框是评委看不到的内容。点击方框可开启或关闭遮盖，在页面上拖动可绘制新的方框，不属于文章正文的页面可以整页排除。"
+
+msgid "Skip to next"
+msgstr "跳到下一篇"
+
+msgid ""
+"The file is stored but cannot be shown to judges. Download it to see what is"
+" wrong; if the contestant sends a corrected PDF, upload that instead and "
+"delete this one."
+msgstr "文件已保存，但无法展示给评委。请下载查看问题所在；如果参赛者发来修正后的 PDF，请上传新文件并删除此文件。"
+
+msgid "Try processing it again"
+msgstr "重新尝试处理"
+
+msgid ""
+"This essay is already with judges. Changes you save here reach them "
+"immediately, after passing the same checks as a release."
+msgstr "这篇文章已在评委手中。您在此保存的修改会在通过与发放相同的检查后立即对他们生效。"
+
+msgid "You have unsaved changes to the redactions."
+msgstr "您对遮盖的修改尚未保存。"
+
+msgid "Left out — judges will not get this page"
+msgstr "已排除——评委不会收到此页"
+
+msgid "Leave this page out"
+msgstr "排除此页"
+
+msgid "Put this page back"
+msgstr "恢复此页"
+
+msgid ""
+"This is the text copy judges can select and search, as of your last save. "
+"Words under a black box are removed from it. Check it too: a PDF can carry "
+"text that is not visible on the page."
+msgstr "这是评委可以选取和搜索的文本副本，以您上次保存时为准。黑框下的词语已从中移除。请一并检查：PDF 中可能含有页面上看不见的文本。"
+
+msgid "No readable text."
+msgstr "没有可读取的文本。"
+
+msgid "redacted"
+msgstr "已遮盖"
+
+msgid "outlined, not redacted"
+msgstr "已标出，未遮盖"
+
+msgid "Before release"
+msgstr "发放前须处理"
+
+msgid ""
+"Pull this essay back? Judges will not see it until you release it again."
+msgstr "收回这篇文章？在您再次发放之前，评委将无法看到它。"
+
+msgid "Pull back from judges"
+msgstr "从评委处收回"
+
+msgid "Release to judges"
+msgstr "发放给评委"
+
+msgid ""
+"Release anyway: I have checked the pages myself and the warning above is a "
+"false alarm"
+msgstr "照常发放：我已亲自检查各页，上述警告属于误报"
+
+msgid "Redact a word everywhere"
+msgstr "全文遮盖某个词"
+
+msgid "Word or phrase"
+msgstr "词或短语"
+
+msgid "Redact"
+msgstr "遮盖"
+
+msgid ""
+"Finds it on every page. For anything the search cannot find (a logo, a "
+"signature, a scan), drag a box over it."
+msgstr "在每一页上查找。对于搜索无法找到的内容（徽标、签名、扫描件），请拖动绘制方框将其盖住。"
+
+msgid "Checklist"
+msgstr "检查清单"
+
+msgid ""
+"Nothing was found automatically. Still look over the first and last pages."
+msgstr "没有自动找到任何内容。但仍请查看第一页和最后一页。"
+
+msgid "Author on record"
+msgstr "登记的作者信息"
+
+msgid "Name"
+msgstr "姓名"
+
+msgid "File"
+msgstr "文件"
+
+msgid "File properties"
+msgstr "文件属性"
+
+msgid "Edit author details"
+msgstr "编辑作者信息"
+
+msgid ""
+"Start the automatic redaction again? Your own boxes will be removed and the "
+"essay will be pulled back from judges until you release it again."
+msgstr "重新开始自动遮盖？您自己添加的方框将被移除，文章也会从评委处收回，直到您再次发放。"
+
+msgid "Start the automatic redaction again? Your own boxes will be removed."
+msgstr "重新开始自动遮盖？您自己添加的方框将被移除。"
+
+msgid "Start automatic redaction again"
+msgstr "重新开始自动遮盖"
+
+msgid "Contest"
+msgstr "比赛"
+
+msgid "From the contest website"
+msgstr "来自比赛网站"
+
+msgid ""
+"For reference only. The judging deadline below is separate and is yours to "
+"set; it should fall after the last date on which essays can arrive."
+msgstr "仅供参考。下方的评审截止时间与此无关，由您自行设定；应晚于文章可能送达的最后日期。"
+
+msgid "Deadlines and reminders"
+msgstr "截止时间与提醒"
+
+#, python-format
+msgid "Times are in %(time_zone)s"
+msgstr "时间以 %(time_zone)s 时区为准"
+
+msgid ""
+"Email is not configured on this server, so reminders will not be delivered."
+msgstr "本服务器未配置邮件，因此提醒不会送达。"
+
+msgid "Scoring rules"
+msgstr "评分规则"
+
+msgid "Invitations"
+msgstr "邀请"
+
+#, python-format
+msgid ""
+"Links in emails point to %(site_url)s. This is set by SITE_URL on the "
+"server."
+msgstr "邮件中的链接指向 %(site_url)s。该地址由服务器上的 SITE_URL 设置。"
+
+msgid "Save settings"
+msgstr "保存设置"
+
+msgid "Judging sheet"
+msgstr "评分表"
+
+msgid ""
+"Reopen this sheet so the judge can change and resubmit it? Its scores stop "
+"counting until then."
+msgstr "重新开放这份评分表，让评委修改后再次提交？在此之前其分数不计入结果。"
+
+msgid "Reopen for the judge"
+msgstr "为评委重新开放"
+
+msgid "The judge has not started this sheet."
+msgstr "评委尚未开始填写这份评分表。"
+
+msgid ""
+"This is a draft. It has not been submitted and does not count towards the "
+"result."
+msgstr "这是草稿，尚未提交，不计入结果。"
+
+msgid "Flags and confirmation"
+msgstr "标记与确认"
+
+msgid "Yes,No"
+msgstr "是,否"
+
+msgid ""
+"Nothing uploaded here is visible to judges until you have reviewed and "
+"released it."
+msgstr "在您审核并发放之前，这里上传的任何内容评委都看不到。"
+
+msgid "Author spreadsheet"
+msgstr "作者信息表"
+
+msgid ""
+"Upload the spreadsheet of submissions first. Knowing each author’s name, "
+"school and email lets the portal redact them reliably, and fills in the "
+"prompt for you."
+msgstr "请先上传投稿信息表。掌握每位作者的姓名、学校和邮箱后，系统才能可靠地将其遮盖，并自动填入题目。"
+
+msgid ""
+"Essays arrive by email with whatever file name the contestant chose, and "
+"every essay starts with a cover page. Give each PDF a unique name before "
+"uploading (a submission number works well), and list that name in the "
+"spreadsheet. The cover page is left out automatically."
+msgstr ""
+"文章通过电子邮件提交，文件名由参赛者自定，且每篇文章都以封面页开头。上传前请为每个 PDF "
+"起一个唯一的文件名（例如投稿编号），并在信息表中填写该文件名。封面页会被自动排除。"
+
+msgid ""
+"CSV or XLSX with a header row. Required column: <span "
+"class=\"mono\">filename</span>. Optional: <span class=\"mono\">name</span>, "
+"<span class=\"mono\">email</span>, <span class=\"mono\">school</span>, <span"
+" class=\"mono\">division</span> (whether the author is a high school or "
+"undergraduate student), <span class=\"mono\">prompt</span> (I–VI, a number, "
+"or the theme). Rows are matched to essay files by file name; you can re-"
+"import at any time. An essay is judged in the category of its prompt, "
+"whatever the author’s level."
+msgstr ""
+"带表头的 CSV 或 XLSX 文件。必需列：<span class=\"mono\">filename</span>。可选列：<span "
+"class=\"mono\">name</span>、<span class=\"mono\">email</span>、<span "
+"class=\"mono\">school</span>、<span "
+"class=\"mono\">division</span>（作者是高中生还是本科生）、<span "
+"class=\"mono\">prompt</span>（I–VI、数字或主题）。各行按文件名与文章文件匹配；您可以随时重新导入。无论作者身份如何，文章都在其题目所属的组别参评。"
+
+msgid "Import"
+msgstr "导入"
+
+#, python-format
+msgid "%(records)s author records on file."
+msgstr "已登记 %(records)s 条作者信息。"
+
+msgid "Finished."
+msgstr "已完成。"
+
+msgid "Uploading"
+msgstr "正在上传"
+
+msgid "Upload failed — try this file again."
+msgstr "上传失败——请重新上传此文件。"
+
+msgid "Essay files"
+msgstr "文章文件"
+
+msgid ""
+"Used for files that have no row in the author spreadsheet. You can change "
+"either later."
+msgstr "用于作者信息表中没有对应行的文件。两项都可以稍后修改。"
+
+msgid "Drop PDF files here"
+msgstr "将 PDF 文件拖放到这里"
+
+#, python-format
+msgid "or choose them below · up to %(max_mb)s MB each"
+msgstr "或在下方选择文件 · 每个文件不超过 %(max_mb)s MB"
+
+msgid "Go to anonymization review"
+msgstr "前往匿名化审核"
+
+msgid "What happens to each file"
+msgstr "每个文件的处理流程"
+
+msgid ""
+"Each page is turned into an image. The file itself, its name and its "
+"document properties are never shown to judges."
+msgstr "每一页都会转换为图像。文件本身、文件名及其文档属性绝不会显示给评委。"
+
+msgid ""
+"A title page is left out, and black boxes are placed over the author’s name "
+"and school, emails, phone numbers, and running headers that carry the name."
+msgstr "标题页会被排除，并在作者的姓名和学校、邮箱、电话号码以及带有姓名的页眉上加盖黑框。"
+
+msgid ""
+"The essay gets a random ID and waits in the review queue, where you check "
+"the pages, adjust the boxes and release it."
+msgstr "文章获得一个随机编号并进入审核队列，由您检查页面、调整方框后发放。"
+
+msgid ""
+"Scanned PDFs work too, but nothing can be found in them automatically: you "
+"draw the boxes yourself."
+msgstr "扫描版 PDF 也可以使用，但无法从中自动查找任何内容：需要您自己绘制方框。"
+
+msgid "Signed"
+msgstr "已签署"
+
+msgid "None"
+msgstr "无"
+
+msgid "Notes"
+msgstr "备注"
+
+msgid "Ask this judge to sign the statement again?"
+msgstr "要求这位评委重新签署声明？"
+
+msgid "Require re-signing"
+msgstr "要求重新签署"
+
+msgid "Not signed yet. The judge cannot open essays until it is."
+msgstr "尚未签署。签署之前评委无法打开文章。"
+
+msgid "No essays assigned."
+msgstr "尚未分配文章。"
+
+msgid ""
+"Release every unfinished assignment this judge holds? Draft scores will be "
+"discarded from the results."
+msgstr "释放这位评委所有未完成的分配？草稿分数将不计入结果。"
+
+#, python-format
+msgid "Release %(pending_count)s unfinished assignments"
+msgstr "释放 %(pending_count)s 项未完成的分配"
+
+msgid "Use this when a judge drops out, then run auto-assign."
+msgstr "评委退出时使用此功能，然后运行自动分配。"
+
+msgid "Details"
+msgstr "详细信息"
+
+msgid "Access"
+msgstr "访问权限"
+
+msgid "Last sign-in"
+msgstr "最近登录"
+
+msgid "Signs in with"
+msgstr "登录方式"
+
+#, python-format
+msgid "%(n)s passkey"
+msgid_plural "%(n)s passkeys"
+msgstr[0] "%(n)s 个通行密钥"
+
+msgid "a password"
+msgstr "密码"
+
+msgid "Create a new sign-in link"
+msgstr "创建新的登录链接"
+
+msgid ""
+"For someone who has lost their device or forgotten their password. It lets "
+"them create a new passkey or password."
+msgstr "适用于丢失设备或忘记密码的人。对方可通过该链接创建新的通行密钥或密码。"
+
+msgid "Send a new invitation"
+msgstr "重新发送邀请"
+
+msgid ""
+"Remove every passkey this person has? Do this if a device was lost or "
+"stolen."
+msgstr "移除此人的全部通行密钥？设备丢失或被盗时请执行此操作。"
+
+msgid "Remove their passkeys"
+msgstr "移除其通行密钥"
+
+msgid "Deactivate account"
+msgstr "停用账号"
+
+msgid "Reactivate account"
+msgstr "重新启用账号"
+
+msgid ""
+"People join by invitation only. Each invitation is a one-time link with "
+"which they set up their own sign-in: a passkey or a password."
+msgstr "成员只能通过邀请加入。每份邀请都是一次性链接，受邀者通过它自行设置登录方式：通行密钥或密码。"
+
+msgid "No judges yet. Invite the first one with the form on this page."
+msgstr "尚无评委。请用本页的表单邀请第一位评委。"
+
+msgid "Administrators"
+msgstr "管理员"
+
+msgid ""
+"Administrators can see author identities and every score. They are not "
+"assigned essays."
+msgstr "管理员可以看到作者身份和所有评分。系统不会向管理员分配文章。"
+
+msgid "Invite someone"
+msgstr "邀请成员"
+
+msgid "Send invitation"
+msgstr "发送邀请"
+
+msgid "Create invitation"
+msgstr "创建邀请"
+
+msgid ""
+"You will get the invitation as a ready-written message to send from your own"
+" email."
+msgstr "系统会生成一封写好的邀请邮件，由您用自己的邮箱发送。"
+
+#, python-format
+msgid "Author’s full name: %(n)s box(es)"
+msgstr "作者全名：%(n)s 个方框"
+
+#, python-format
+msgid "Name from the file’s properties: %(n)s box(es)"
+msgstr "文件属性中的姓名：%(n)s 个方框"
+
+#, python-format
+msgid "School name: %(n)s box(es)"
+msgstr "学校名称：%(n)s 个方框"
+
+#, python-format
+msgid "Email addresses: %(n)s box(es)"
+msgstr "邮箱地址：%(n)s 个方框"
+
+#, python-format
+msgid "Phone numbers: %(n)s box(es)"
+msgstr "电话号码：%(n)s 个方框"
+
+#, python-format
+msgid "Labelled identity lines (“Name: …”): %(n)s box(es)"
+msgstr "带标签的身份信息行（“Name: …”）：%(n)s 个方框"
+
+#, python-format
+msgid "Repeating page header or footer: %(n)s box(es)"
+msgstr "重复出现的页眉或页脚：%(n)s 个方框"
+
+#, python-format
+msgid "Words you asked to redact everywhere: %(n)s box(es)"
+msgstr "您要求全文遮盖的词语：%(n)s 个方框"
+
+#, python-format
+msgid "Boxes you drew: %(n)s"
+msgstr "您绘制的方框：%(n)s 个"
+
+#, python-format
+msgid "Pages left out (title page): %(pages)s"
+msgstr "已排除的页面（标题页）：%(pages)s"
+
+msgid ""
+"No author name on record, so the name could only be found by pattern. Import"
+" the author spreadsheet or look over every page closely."
+msgstr "没有登记作者姓名，只能依靠规则查找姓名。请导入作者信息表，或仔细查看每一页。"
+
+msgid ""
+"The author name on record is too long to match automatically. Shorten it to "
+"the person’s actual name, or redact by hand."
+msgstr "登记的作者姓名过长，无法自动匹配。请改为作者的真实姓名，或手动遮盖。"
+
+msgid ""
+"This PDF has little or no readable text (it may be a scan). Nothing could be"
+" found automatically: draw boxes over anything identifying yourself."
+msgstr "该 PDF 几乎没有可读取的文本（可能是扫描件）。无法自动查找任何内容：请自行在任何可能透露身份的内容上绘制方框。"
+
+msgid ""
+"Another upload has the same file name. Author records are matched by file "
+"name, so check by hand that the author shown here is really this essay’s "
+"author."
+msgstr "另有一份上传文件与其同名。作者信息按文件名匹配，因此请人工核对此处显示的作者确实是本文作者。"
+
+#, python-format
+msgid ""
+"“%(term)s” (part of the author’s name) appears %(n)s time(s) — outlined"
+msgstr "“%(term)s”（作者姓名的一部分）出现 %(n)s 次——已标出"
+
+#, python-format
+msgid "“%(term)s” (from the school name) appears %(n)s time(s) — outlined"
+msgstr "“%(term)s”（来自学校名称）出现 %(n)s 次——已标出"
+
+#, python-format
+msgid "Possible self-identifying statement: %(n)s — outlined"
+msgstr "可能透露身份的自述：%(n)s 处——已标出"
+
+#, python-format
+msgid ""
+"Repeating page header or footer without the author’s name: %(n)s — outlined"
+msgstr "不含作者姓名的重复页眉或页脚：%(n)s 处——已标出"
+
+msgid ""
+"The author is recorded as an undergraduate but answered a high school prompt"
+" (I–III). The rules limit undergraduates to Prompts IV–VI."
+msgstr "作者登记为本科生，但回答的是高中组题目（I–III）。按规则，本科生只能回答题目 IV–VI。"
+
+#, python-format
+msgid ""
+"About %(n)s words on the pages; the limit is %(limit)s. The count includes "
+"footnotes, references and headers, so check before acting on it."
+msgstr "页面上约有 %(n)s 词；上限为 %(limit)s。该计数包含脚注、参考文献和页眉，请核实后再作处理。"
+
+msgid "Acknowledgements section — may name teachers or family"
+msgstr "致谢部分——可能提及老师或家人的姓名"
+
+#, python-format
+msgid ""
+"Too many failed attempts. Please wait %(minutes)s minutes and try again."
+msgstr "失败次数过多。请等待 %(minutes)s 分钟后再试。"
+
+msgid "The email or password is not correct."
+msgstr "邮箱或密码不正确。"
+
+msgid "Welcome. Your account is ready."
+msgstr "欢迎！您的账号已就绪。"
+
+msgid "Your password has been changed. Please sign in."
+msgstr "密码已修改，请登录。"
+
+msgid "Your password has been changed."
+msgstr "密码已修改。"
+
+msgid ""
+"This is your only way to sign in. Add another passkey or set a password "
+"before removing it."
+msgstr "这是您唯一的登录方式。请先添加另一个通行密钥或设置密码，再移除它。"
+
+msgid "Passkey removed."
+msgstr "通行密钥已移除。"
+
+msgid "Your details have been saved."
+msgstr "个人信息已保存。"
+
+msgid "Passkey added."
+msgstr "通行密钥已添加。"
+
+msgid "Thank you. You can now begin judging."
+msgstr "谢谢！您现在可以开始评审了。"
+
+#, python-format
+msgid "Score every criterion. Missing: %(list)s."
+msgstr "请为每项标准评分。尚缺：%(list)s。"
+
+#, python-format
+msgid "Write a justification for every criterion. Missing: %(list)s."
+msgstr "请为每项标准撰写评语。尚缺：%(list)s。"
+
+#, python-format
+msgid ""
+"Your comments total %(words)s words; at least %(minimum)s are required."
+msgstr "您的评语共 %(words)s 词；至少需要 %(minimum)s 词。"
+
+msgid ""
+"Explain the flag or referral in the notes: identify the passage(s) and your "
+"reason."
+msgstr "请在说明中解释您的标记或转交主席的原因：指出相关段落并说明理由。"
+
+msgid "Tick the confirmation and type your name to sign the sheet."
+msgstr "请勾选确认声明并输入姓名以签署评分表。"
+
+msgid "Draft saved."
+msgstr "草稿已保存。"
+
+#, python-format
+msgid "Your sheet for essay %(code)s has been submitted."
+msgstr "您对文章 %(code)s 的评分表已提交。"
+
+msgid "Please give a short reason for the committee chair."
+msgstr "请向委员会主席简要说明理由。"
+
+#, python-format
+msgid ""
+"Essay %(code)s has been returned to the committee chair for reassignment."
+msgstr "文章 %(code)s 已退回委员会主席重新分配。"
+
+#, python-format
+msgid "Uploaded as %(code)s — ready for anonymization review."
+msgstr "已上传，编号 %(code)s——等待匿名化审核。"
+
+#, python-format
+msgid ""
+"Uploaded as %(code)s. Another upload has the same file name, so no author "
+"record was attached — enter the author’s details by hand before reviewing."
+msgstr "已上传，编号 %(code)s。另有一份上传文件与其同名，因此未关联作者信息——请在审核前手动填写作者信息。"
+
+#, python-format
+msgid "Stored as %(code)s, but it could not be processed: %(note)s"
+msgstr "已保存，编号 %(code)s，但无法处理：%(note)s"
+
+#, python-format
+msgid "Skipped: identical to %(code)s, which is already in the portal."
+msgstr "已跳过：与系统中已有的 %(code)s 完全相同。"
+
+msgid "Only PDF files are accepted."
+msgstr "仅接受 PDF 文件。"
+
+#, python-format
+msgid "File is larger than %(mb)s MB."
+msgstr "文件超过 %(mb)s MB。"
+
+msgid "The spreadsheet has no data rows."
+msgstr "表格中没有数据行。"
+
+msgid "Use a CSV or XLSX file for the author spreadsheet."
+msgstr "作者信息表请使用 CSV 或 XLSX 文件。"
+
+msgid "The spreadsheet could not be read."
+msgstr "无法读取该表格。"
+
+msgid "The spreadsheet is too large."
+msgstr "表格过大。"
+
+msgid "The spreadsheet needs a column named “filename”."
+msgstr "表格需要包含名为“filename”的列。"
+
+#, python-format
+msgid "%(n)s essay uploaded."
+msgid_plural "%(n)s essays uploaded."
+msgstr[0] "已上传 %(n)s 篇文章。"
+
+msgid "Invalid request."
+msgstr "请求无效。"
+
+msgid "Choose a CSV or XLSX file first."
+msgstr "请先选择 CSV 或 XLSX 文件。"
+
+#, python-format
+msgid ""
+"%(rows)s author records imported; %(matched)s matched essays already "
+"uploaded (%(reprocessed)s re-redacted with the new details)."
+msgstr ""
+"已导入 %(rows)s 条作者信息；匹配到 %(matched)s 篇已上传的文章（其中 %(reprocessed)s 篇已根据新信息重新遮盖）。"
+
+#, python-format
+msgid ""
+"These file names belong to more than one author or more than one upload, so "
+"no author record was attached automatically. Enter the details by hand on "
+"each essay: %(names)s"
+msgstr "以下文件名对应多位作者或多份上传文件，因此未自动关联作者信息。请在每篇文章中手动填写：%(names)s"
+
+#, python-format
+msgid ""
+"%(n)s released essays were pulled back for review: the author details just "
+"imported still appear in their text."
+msgstr "已收回 %(n)s 篇已发放的文章重新审核：刚导入的作者信息仍出现在其文本中。"
+
+msgid "The essay was pulled back from judges. Check it and release it again."
+msgstr "文章已从评委处收回。请检查后重新发放。"
+
+msgid "Essay details saved."
+msgstr "文章信息已保存。"
+
+msgid "Assignment removed. Any scores it held no longer count."
+msgstr "分配已移除，其中的评分不再计入结果。"
+
+msgid "This essay has assignments and cannot be deleted. Withdraw it instead."
+msgstr "这篇文章已有分配记录，无法删除。请改为撤回。"
+
+msgid "Essay deleted."
+msgstr "文章已删除。"
+
+msgid "Only essays released to judges can be assigned."
+msgstr "只有已发放给评委的文章才能分配。"
+
+#, python-format
+msgid ""
+"No eligible judge is available for %(code)s. Every judge who has signed the "
+"statement has either read it already, declared a conflict with its prompt, "
+"or reached their limit."
+msgstr "没有可分配给 %(code)s 的合格评委。所有已签署声明的评委要么已读过该文章，要么对其题目申明了冲突，要么已达到上限。"
+
+#, python-format
+msgid "%(code)s assigned to %(judge)s."
+msgstr "%(code)s 已分配给 %(judge)s。"
+
+msgid "Essay withdrawn. Judges can no longer see it."
+msgstr "文章已撤回，评委无法再看到。"
+
+msgid "Essay disqualified. Judges can no longer see it."
+msgstr "文章已取消资格，评委无法再看到。"
+
+msgid "Essay restored."
+msgstr "文章已恢复。"
+
+msgid "No essays are waiting for anonymization review."
+msgstr "没有等待匿名化审核的文章。"
+
+msgid "This essay has not been released yet."
+msgstr "这篇文章尚未发放。"
+
+msgid "The file was processed."
+msgstr "文件已处理完成。"
+
+msgid "Essay pulled back. Judges cannot see it until it is released again."
+msgstr "文章已收回。再次发放之前评委无法看到。"
+
+msgid "Automatic redaction re-run. Your own boxes were removed."
+msgstr "已重新运行自动遮盖，您自己添加的方框已被移除。"
+
+#, python-format
+msgid "“%(term)s” redacted in %(n)s place."
+msgid_plural "“%(term)s” redacted in %(n)s places."
+msgstr[0] "“%(term)s”已在 %(n)s 处遮盖。"
+
+#, python-format
+msgid "“%(term)s” does not appear on the pages."
+msgstr "页面上没有出现“%(term)s”。"
+
+#, python-format
+msgid "Not released: %(why)s."
+msgstr "未发放：%(why)s。"
+
+#, python-format
+msgid "Not saved: %(why)s."
+msgstr "未保存：%(why)s。"
+
+#, python-format
+msgid "%(code)s released for judging."
+msgstr "%(code)s 已发放供评审。"
+
+msgid "Saved. Judges now see the updated pages."
+msgstr "已保存。评委现在看到的是更新后的页面。"
+
+msgid "Saved."
+msgstr "已保存。"
+
+#, python-format
+msgid "%(name)s has been invited."
+msgstr "已邀请 %(name)s。"
+
+msgid "Passkeys removed. Create a sign-in link so they can set up a new one."
+msgstr "通行密钥已移除。请创建登录链接，以便对方重新设置。"
+
+msgid "You cannot deactivate your own account."
+msgstr "您不能停用自己的账号。"
+
+msgid "Account reactivated."
+msgstr "账号已重新启用。"
+
+msgid "Account deactivated. Their unfinished essays should be reassigned."
+msgstr "账号已停用。请重新分配其未完成的文章。"
+
+msgid "The judge must sign the statement again before continuing."
+msgstr "该评委必须重新签署声明后才能继续。"
+
+#, python-format
+msgid ""
+"%(n)s unfinished assignments released. Run auto-assign to hand them to other"
+" judges."
+msgstr "已释放 %(n)s 项未完成的分配。请运行自动分配，将其交给其他评委。"
+
+#, python-format
+msgid "%(n)s assignment created."
+msgid_plural "%(n)s assignments created."
+msgstr[0] "已创建 %(n)s 项分配。"
+
+#, python-format
+msgid ""
+"%(n)s essays still lack readers because no eligible judge was available: "
+"%(codes)s"
+msgstr "仍有 %(n)s 篇文章缺少评委，因为没有合格的评委可用：%(codes)s"
+
+#, python-format
+msgid "%(n)s judges notified by email."
+msgstr "已通过邮件通知 %(n)s 位评委。"
+
+msgid "Marked as announced."
+msgstr "已标记为已通知。"
+
+#, python-format
+msgid "Reminder sent to %(n)s judges."
+msgstr "已向 %(n)s 位评委发送提醒。"
+
+msgid "Sheet reopened. The judge can edit and resubmit it."
+msgstr "评分表已重新开放，评委可以修改并再次提交。"
+
+msgid "This prompt has essays, so it was deactivated instead of deleted."
+msgstr "该题目下已有文章，因此仅停用而未删除。"
+
+msgid "Prompt deleted."
+msgstr "题目已删除。"
+
+msgid "Prompt saved."
+msgstr "题目已保存。"
+
+msgid "Settings saved."
+msgstr "设置已保存。"

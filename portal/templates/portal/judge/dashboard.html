@@ -1,0 +1,69 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "My essays" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "My essays" %}</h1>
+  <p>{% translate "Essays are anonymous. Please do not try to identify authors, and do not discuss your scores with other judges." %}</p>
+</div></div>
+
+<div class="grid three" style="margin-bottom:18px">
+  <div class="card stat">
+    <div class="stat-label">{% translate "To score" %}</div>
+    <div class="stat-value">{{ todo|length }}</div>
+  </div>
+  <div class="card stat">
+    <div class="stat-label">{% translate "Submitted" %}</div>
+    <div class="stat-value">{{ done|length }} <span class="muted" style="font-size:16px">/ {{ total }}</span></div>
+    <div class="bar thin" style="margin-top:10px"><span style="width:{{ percent }}%"></span></div>
+  </div>
+  <div class="card stat{% if overdue %} attention{% endif %}">
+    <div class="stat-label">{% translate "Deadline" %}</div>
+    {% if deadline %}
+      <div class="stat-value" style="font-size:20px;margin-top:10px">{{ deadline|date:"DATETIME_FORMAT" }}</div>
+      <div class="stat-note">{% if overdue %}{% translate "The deadline has passed — please submit as soon as you can." %}{% else %}{% blocktranslate with until=deadline|timeuntil %}{{ until }} left{% endblocktranslate %}{% endif %}</div>
+    {% else %}
+      <div class="stat-value" style="font-size:20px;margin-top:10px">—</div>
+      <div class="stat-note">{% translate "No deadline has been set yet." %}</div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="stack">
+  <div class="card">
+    <div class="card-head"><h2>{% translate "To score" %}</h2></div>
+    {% if todo %}
+    <ul class="essay-list">
+      {% for a in todo %}
+      <li>
+        <div class="meta">
+          <div><span class="code">{{ a.essay.code }}</span> &nbsp;{% assignment_badge a %}{% if a.round == "rescore" %} <span class="badge badge-info">{% translate "Re-score" %}</span>{% endif %}</div>
+          <div class="small">{{ a.essay.get_division_display }} · {% blocktranslate count n=a.essay.released_pages %}{{ n }} page{% plural %}{{ n }} pages{% endblocktranslate %}{% if a.essay.word_count %} · {% blocktranslate count n=a.essay.word_count %}{{ n }} word{% plural %}{{ n }} words{% endblocktranslate %}{% endif %}{% if a.essay.prompt %} · {{ a.essay.prompt|prompt_label }}{% endif %}</div>
+        </div>
+        <a class="btn btn-primary" href="{% url 'judge_sheet' a.essay.code %}">{% if a.status == "draft" %}{% translate "Continue" %}{% else %}{% translate "Read and score" %}{% endif %}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty">{% if total %}{% translate "All done — thank you. Nothing is waiting for you." %}{% else %}{% translate "No essays have been assigned to you yet. You will receive an email when they are." %}{% endif %}</div>
+    {% endif %}
+  </div>
+
+  {% if done %}
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Submitted" %}</h2></div>
+    <ul class="essay-list">
+      {% for a in done %}
+      <li>
+        <div class="meta">
+          <div><span class="code">{{ a.essay.code }}</span> &nbsp;{% assignment_badge a %}</div>
+          <div class="small">{{ a.essay.get_division_display }} · {% translate "Your average" %}: {{ a.sheet.average|score:2 }} · {{ a.submitted_at|date:"SHORT_DATETIME_FORMAT" }}</div>
+        </div>
+        <a class="btn" href="{% url 'judge_sheet' a.essay.code %}">{% translate "View" %}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

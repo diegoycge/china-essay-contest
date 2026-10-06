@@ -1,0 +1,8 @@
+{% load i18n %}
+{% if page.has_other_pages %}
+<div class="pagination">
+  {% if page.has_previous %}<a class="btn btn-small" href="?{% if querystring %}{{ querystring }}&{% endif %}page={{ page.previous_page_number }}">← {% translate "Previous" %}</a>{% endif %}
+  <span class="muted small">{% blocktranslate with n=page.number total=page.paginator.num_pages %}Page {{ n }} of {{ total }}{% endblocktranslate %}</span>
+  {% if page.has_next %}<a class="btn btn-small" href="?{% if querystring %}{{ querystring }}&{% endif %}page={{ page.next_page_number }}">{% translate "Next" %} →</a>{% endif %}
+</div>
+{% endif %}

@@ -1,0 +1,74 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "Assignments" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Assignments" %}</h1>
+  <p>{% blocktranslate with n=contest.readers_per_essay %}Each released essay needs {{ n }} readers. Auto-assign picks them at random while keeping workloads level, and never gives a judge an essay on a prompt they declared a conflict with.{% endblocktranslate %}</p>
+</div></div>
+{% if unsigned_judges %}<div class="notice">{% blocktranslate %}{{ eligible_judges }} judges can receive essays. {{ unsigned_judges }} more have not signed the judge’s statement yet, so their conflicts are unknown and they are skipped until they do.{% endblocktranslate %}</div>{% endif %}
+
+<div class="grid three">
+  <div class="card">
+    <div class="card-body">
+      <div class="stat-label">{% translate "Open reader slots" %}</div>
+      <div class="stat-value">{{ slot_total }}</div>
+      <div class="stat-note">{% blocktranslate %}across {{ slot_essays }} essays{% endblocktranslate %}{% if awaiting_release %} · {% blocktranslate %}{{ awaiting_release }} more essays await release{% endblocktranslate %}{% endif %}</div>
+      <form method="post" style="margin-top:14px">{% csrf_token %}
+        <label class="check"><input type="checkbox" name="notify" value="1" {% if email_configured %}checked{% endif %}> <span>{% translate "Email judges about their new essays" %}</span></label>
+        <button class="btn btn-primary" name="action" value="auto" style="width:100%" {% if not slot_total %}disabled{% endif %}>{% translate "Auto-assign now" %}</button>
+      </form>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="stat-label">{% translate "Not yet announced" %}</div>
+      <div class="stat-value">{{ unnotified }}</div>
+      <div class="stat-note">{% translate "assignments whose judge has not been emailed" %}</div>
+      {% if email_configured %}
+      <form method="post" style="margin-top:14px">{% csrf_token %}
+        <button class="btn" name="action" value="notify" style="width:100%" {% if not unnotified %}disabled{% endif %}>{% translate "Email these judges" %}</button>
+      </form>
+      {% else %}
+        {% include "portal/manage/_drafts.html" with drafts=announce_drafts %}
+        {% if unnotified %}
+        <form method="post" style="margin-top:8px">{% csrf_token %}
+          <button class="btn btn-small" name="action" value="mark_announced" style="width:100%">{% translate "I have told them: mark as announced" %}</button>
+        </form>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="stat-label">{% translate "Outstanding sheets" %}</div>
+      <div class="stat-value">{{ outstanding }}</div>
+      {% if email_configured %}
+      <div class="stat-note">{% translate "Scheduled reminders go out automatically before each deadline." %}</div>
+      <form method="post" style="margin-top:14px" data-confirm="{% translate 'Email every judge who still has essays to score?' %}">{% csrf_token %}
+        <button class="btn" name="action" value="remind" style="width:100%" {% if not outstanding %}disabled{% endif %}>{% translate "Send a reminder now" %}</button>
+      </form>
+      {% else %}
+      <div class="stat-note">{% translate "Remind the judges who still have essays to score, whenever you choose." %}</div>
+      {% include "portal/manage/_drafts.html" with drafts=remind_drafts %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% if not email_configured %}<div class="notice" style="margin-top:18px">{% translate "This portal does not send email itself. The buttons above open a ready-written message in your own mail app, addressed to you with the judges in Bcc so they do not see one another." %}</div>{% endif %}
+
+<div class="card" style="margin-top:18px">
+  <div class="card-head"><h2>{% translate "Workload" %}</h2></div>
+  {% include "portal/manage/_progress_table.html" %}
+</div>
+
+{% if slots %}
+<div class="card" style="margin-top:18px">
+  <div class="card-head"><h2>{% translate "Essays missing readers" %}</h2></div>
+  <div class="table-wrap"><table>
+    <thead><tr><th>{% translate "Essay ID" %}</th><th>{% translate "Division" %}</th><th>{% translate "Prompt" %}</th><th class="num">{% translate "Readers needed" %}</th></tr></thead>
+    <tbody>{% for essay, need in slots %}<tr><td><a class="code" href="{% url 'manage_essay' essay.pk %}">{{ essay.code }}</a></td><td>{{ essay.get_division_display }}</td><td class="small">{{ essay.prompt|prompt_label }}</td><td class="num">{{ need }}</td></tr>{% endfor %}</tbody>
+  </table></div>
+</div>
+{% endif %}
+{% endblock %}

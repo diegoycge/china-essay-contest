@@ -1,0 +1,104 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{{ person.full_name }}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <p class="small" style="margin:0 0 6px"><a href="{% url 'manage_users' %}">← {% translate "Judges and admins" %}</a></p>
+  <h1>{{ person.full_name }} {% include "portal/manage/_user_status.html" %}</h1>
+  <p>{{ person.email }} · {{ person.get_role_display }}</p>
+</div></div>
+{% include "portal/_link_notice.html" %}
+
+<div class="grid side">
+  <div class="stack">
+    {% if person.is_judge %}
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Judge’s statement" %}</h2></div>
+      <div class="card-body">
+        {% if attestation %}
+          <dl class="kv">
+            <dt>{% translate "Signed" %}</dt><dd>{{ attestation.signed_name }} · {{ attestation.signed_at|date:"DATETIME_FORMAT" }}</dd>
+            <dt>{% translate "Declared conflicts" %}</dt><dd>{% for p in attestation.conflict_prompts.all %}<div>{{ p|prompt_label }}</div>{% empty %}{% translate "None" %}{% endfor %}</dd>
+            {% if attestation.conflict_notes %}<dt>{% translate "Notes" %}</dt><dd>{{ attestation.conflict_notes|linebreaksbr }}</dd>{% endif %}
+          </dl>
+          <form method="post" style="margin-top:12px" data-confirm="{% translate 'Ask this judge to sign the statement again?' %}">{% csrf_token %}
+            <button class="btn btn-small" name="action" value="clear_statement">{% translate "Require re-signing" %}</button>
+          </form>
+        {% else %}
+          <p class="muted" style="margin:0">{% translate "Not signed yet. The judge cannot open essays until it is." %}</p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Assignments" %}</h2></div>
+      {% if assignments %}
+      <div class="table-wrap"><table>
+        <thead><tr><th>{% translate "Essay ID" %}</th><th>{% translate "Round" %}</th><th>{% translate "Status" %}</th><th class="num">{% translate "Average" %}</th><th>{% translate "Submitted" %}</th><th></th></tr></thead>
+        <tbody>
+        {% for a in assignments %}
+          <tr>
+            <td><a class="code" href="{% url 'manage_essay' a.essay.pk %}">{{ a.essay.code }}</a></td>
+            <td>{{ a.get_round_display }}</td>
+            <td>{% assignment_badge a %}</td>
+            <td class="num">{% if a.status == "submitted" %}{{ a.sheet.average|score:2 }}{% else %}—{% endif %}</td>
+            <td class="small muted">{% if a.submitted_at %}{{ a.submitted_at|date:"SHORT_DATETIME_FORMAT" }}{% else %}—{% endif %}</td>
+            <td class="right">{% if a.status == "submitted" or a.status == "draft" %}<a class="btn btn-small" href="{% url 'manage_sheet' a.pk %}">{% translate "View sheet" %}</a>{% endif %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table></div>
+      {% else %}<div class="empty">{% translate "No essays assigned." %}</div>{% endif %}
+      {% if pending_count %}
+      <div class="card-foot">
+        <form method="post" data-confirm="{% translate 'Release every unfinished assignment this judge holds? Draft scores will be discarded from the results.' %}">{% csrf_token %}
+          <button class="btn btn-small btn-danger" name="action" value="release_pending">{% blocktranslate %}Release {{ pending_count }} unfinished assignments{% endblocktranslate %}</button>
+          <span class="small muted">{% translate "Use this when a judge drops out, then run auto-assign." %}</span>
+        </form>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="stack">
+    <form method="post" class="card" novalidate>{% csrf_token %}
+      <div class="card-head"><h2>{% translate "Details" %}</h2></div>
+      <div class="card-body">
+        {% include "portal/_field.html" with field=form.full_name %}
+        {% include "portal/_field.html" with field=form.affiliation %}
+        {% include "portal/_field.html" with field=form.language %}
+        {% if person.is_judge %}{% include "portal/_field.html" with field=form.max_load %}{% endif %}
+        <button class="btn btn-primary" name="action" value="save">{% translate "Save" %}</button>
+      </div>
+    </form>
+    <div class="card">
+      <div class="card-head"><h2>{% translate "Access" %}</h2></div>
+      <div class="card-body stack">
+        <dl class="kv small">
+          <dt>{% translate "Invited" %}</dt><dd>{{ person.date_joined|date:"SHORT_DATETIME_FORMAT" }}</dd>
+          <dt>{% translate "Last sign-in" %}</dt><dd>{% if person.last_login %}{{ person.last_login|date:"SHORT_DATETIME_FORMAT" }}{% else %}—{% endif %}</dd>
+          <dt>{% translate "Signs in with" %}</dt><dd>{% if passkey_count %}{% blocktranslate count n=passkey_count %}{{ n }} passkey{% plural %}{{ n }} passkeys{% endblocktranslate %}{% endif %}{% if passkey_count and person.has_usable_password %}, {% endif %}{% if person.has_usable_password %}{% translate "a password" %}{% endif %}{% if not passkey_count and not person.has_usable_password %}—{% endif %}</dd>
+        </dl>
+        <form method="post">{% csrf_token %}
+          {% if person.has_signed_in %}
+            <button class="btn" name="action" value="reset" style="width:100%">{% translate "Create a new sign-in link" %}</button>
+            <p class="small muted" style="margin:6px 0 0">{% translate "For someone who has lost their device or forgotten their password. It lets them create a new passkey or password." %}</p>
+          {% else %}
+            <button class="btn" name="action" value="invite" style="width:100%">{% translate "Send a new invitation" %}</button>
+          {% endif %}
+        </form>
+        {% if passkey_count %}
+        <form method="post" data-confirm="{% translate 'Remove every passkey this person has? Do this if a device was lost or stolen.' %}">{% csrf_token %}
+          <button class="btn btn-danger" name="action" value="clear_passkeys" style="width:100%">{% translate "Remove their passkeys" %}</button>
+        </form>
+        {% endif %}
+        {% if person != user %}
+        <form method="post" data-confirm="{% translate 'Are you sure?' %}">{% csrf_token %}
+          <button class="btn {% if person.is_active %}btn-danger{% endif %}" name="action" value="toggle_active" style="width:100%">{% if person.is_active %}{% translate "Deactivate account" %}{% else %}{% translate "Reactivate account" %}{% endif %}</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

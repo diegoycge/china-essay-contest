@@ -1,0 +1,61 @@
+{% extends "portal/base.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Upload" %}{% endblock %}
+{% block container_class %}narrow{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Upload essays" %}</h1>
+  <p>{% translate "Nothing uploaded here is visible to judges until you have reviewed and released it." %}</p>
+</div></div>
+
+<div class="stack">
+  <div class="card">
+    <div class="card-head"><h2>1. {% translate "Author spreadsheet" %}</h2><span class="muted small">{% translate "Recommended" %}</span></div>
+    <div class="card-body">
+      <p>{% translate "Upload the spreadsheet of submissions first. Knowing each author’s name, school and email lets the portal redact them reliably, and fills in the prompt for you." %}</p>
+      <p class="small muted">{% translate "Essays arrive by email with whatever file name the contestant chose, and every essay starts with a cover page. Give each PDF a unique name before uploading (a submission number works well), and list that name in the spreadsheet. The cover page is left out automatically." %}</p>
+      <p class="small muted">{% blocktranslate %}CSV or XLSX with a header row. Required column: <span class="mono">filename</span>. Optional: <span class="mono">name</span>, <span class="mono">email</span>, <span class="mono">school</span>, <span class="mono">division</span> (whether the author is a high school or undergraduate student), <span class="mono">prompt</span> (I–VI, a number, or the theme). Rows are matched to essay files by file name; you can re-import at any time. An essay is judged in the category of its prompt, whatever the author’s level.{% endblocktranslate %}</p>
+      <form method="post" action="{% url 'manage_import_metadata' %}" enctype="multipart/form-data" class="actions">
+        {% csrf_token %}
+        <input type="file" name="sheet" accept=".csv,.xlsx" required>
+        <button class="btn" type="submit">{% translate "Import" %}</button>
+      </form>
+      {% if records %}<p class="small muted" style="margin:10px 0 0">{% blocktranslate %}{{ records }} author records on file.{% endblocktranslate %}</p>{% endif %}
+    </div>
+  </div>
+
+  <form method="post" enctype="multipart/form-data" class="card" id="upload-form" data-url="{% url 'manage_upload_file' %}" data-done="{% translate 'Finished.' %}" data-progress="{% translate 'Uploading' %}" data-failed="{% translate 'Upload failed — try this file again.' %}">
+    {% csrf_token %}
+    <div class="card-head"><h2>2. {% translate "Essay files" %}</h2></div>
+    <div class="card-body">
+      <div class="form-row">
+        {% include "portal/_field.html" with field=form.division %}
+        {% include "portal/_field.html" with field=form.prompt %}
+      </div>
+      <p class="small muted">{% translate "Used for files that have no row in the author spreadsheet. You can change either later." %}</p>
+      <div class="dropzone" id="dropzone">
+        <p><strong>{% translate "Drop PDF files here" %}</strong></p>
+        <p class="muted small">{% blocktranslate %}or choose them below · up to {{ max_mb }} MB each{% endblocktranslate %}</p>
+        <input type="file" name="files" id="files" multiple accept=".pdf,application/pdf">
+      </div>
+      <div class="progress-row" id="upload-progress" hidden style="margin-top:14px"><div class="bar"><span style="width:0"></span></div><span class="small muted tabular" id="upload-count"></span></div>
+      <ul class="upload-list" id="upload-list"></ul>
+      <div class="actions" style="margin-top:14px">
+        <button class="btn btn-primary" type="submit" id="upload-button">{% translate "Upload" %}</button>
+        <a class="btn" href="{% url 'manage_review_queue' %}" id="review-link" hidden>{% translate "Go to anonymization review" %} →</a>
+      </div>
+    </div>
+  </form>
+
+  <div class="card"><div class="card-body">
+    <h3 style="margin-bottom:8px">{% translate "What happens to each file" %}</h3>
+    <ol class="steps">
+      <li>{% translate "Each page is turned into an image. The file itself, its name and its document properties are never shown to judges." %}</li>
+      <li>{% translate "A title page is left out, and black boxes are placed over the author’s name and school, emails, phone numbers, and running headers that carry the name." %}</li>
+      <li>{% translate "The essay gets a random ID and waits in the review queue, where you check the pages, adjust the boxes and release it." %}</li>
+    </ol>
+    <p class="small muted" style="margin:0">{% translate "Scanned PDFs work too, but nothing can be found in them automatically: you draw the boxes yourself." %}</p>
+  </div></div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'portal/js/upload.js' %}"></script>{% endblock %}

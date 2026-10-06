@@ -1,0 +1,35 @@
+{% extends "portal/base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Before you begin" %}{% endblock %}
+{% block content %}
+<div class="page-head"><div>
+  <h1>{% translate "Before you begin" %}</h1>
+  <p>{% translate "Please read the rubric below in full, then sign the statement at the end of the page. You will be able to open your assigned essays once it is signed." %}</p>
+</div></div>
+{% include "portal/judge/_rubric_body.html" %}
+
+<form method="post" class="card" style="margin-top:28px" novalidate>
+  {% csrf_token %}
+  <div class="card-head"><h2>{% translate "Judge’s statement" %}</h2></div>
+  <div class="card-body">
+    {% include "portal/_form_errors.html" %}
+    {% include "portal/_field.html" with field=form.read_rubric %}
+    {% include "portal/_field.html" with field=form.no_beliefs %}
+    <hr>
+    {% if has_prompts %}
+      <div class="field">
+        <span class="label">{{ form.conflict_prompts.label }}</span>
+        <p class="muted small">{% translate "Tick any question on which your personal standpoint could affect your judgement. You will not be assigned essays answering those questions. Leave all unticked if none apply." %}</p>
+        {{ form.conflict_prompts }}
+      </div>
+    {% endif %}
+    {% include "portal/_field.html" with field=form.conflict_notes %}
+    <hr>
+    <div class="form-row">
+      {% include "portal/_field.html" with field=form.signed_name %}
+      <div class="field"><span class="label">{% translate "Date" %}</span><div style="padding:8px 0">{% now "DATE_FORMAT" %}</div></div>
+    </div>
+    <button class="btn btn-primary" type="submit">{% translate "Sign and continue" %}</button>
+  </div>
+</form>
+{% endblock %}

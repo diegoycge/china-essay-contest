@@ -1,0 +1,165 @@
+{% extends "portal/base.html" %}
+{% load i18n static portal_tags %}
+{% block title %}{{ essay.code }}{% endblock %}
+{% block shell %}
+<div class="workspace">
+  <article class="reader" id="reader">
+    <div class="reader-inner">
+      {% include "portal/_messages.html" %}
+      <div class="reader-meta">
+        <a href="{% url 'judge_dashboard' %}">← {% translate "My essays" %}</a>
+        <span class="code">{{ essay.code }}</span>
+        <span class="badge">{{ essay.get_division_display }}</span>
+        {% if assignment.round == "rescore" %}<span class="badge badge-info">{% translate "Re-score" %}</span>{% endif %}
+        <span>{% blocktranslate count n=essay.released_pages %}{{ n }} page{% plural %}{{ n }} pages{% endblocktranslate %}{% if essay.word_count %} · {% blocktranslate count n=essay.word_count %}{{ n }} word{% plural %}{{ n }} words{% endblocktranslate %}{% endif %}</span>
+        <span class="reader-tools">
+          <span class="tabs" role="tablist">
+            <button type="button" class="active" data-view="pages">{% translate "Pages" %}</button>
+            <button type="button" data-view="text">{% translate "Text" %}</button>
+          </span>
+          <button type="button" class="btn btn-small" data-zoom="-1" aria-label="{% translate 'Zoom out' %}">−</button>
+          <button type="button" class="btn btn-small" data-zoom="1" aria-label="{% translate 'Zoom in' %}">+</button>
+        </span>
+      </div>
+      {% if essay.prompt %}
+      <div class="reader-prompt"><strong>{% translate "Prompt" %} {{ essay.prompt|prompt_label }}</strong>{% if essay.prompt|prompt_text %}<br>{{ essay.prompt|prompt_text }}{% endif %}</div>
+      {% endif %}
+      <div class="essay-pages" id="essay-pages">
+        {% for n in pages %}
+        <figure><img src="{% url 'judge_page' essay.code n %}" alt="{% blocktranslate %}Page {{ n }}{% endblocktranslate %}" {% if not forloop.first %}loading="lazy"{% endif %}><figcaption>{{ n }} / {{ essay.released_pages }}</figcaption></figure>
+        {% endfor %}
+      </div>
+      <div id="essay-text" hidden>
+        <p class="muted small">{% translate "A plain-text copy of the same pages, for selecting a reference or searching. Line breaks follow the original; redacted words are left out." %}</p>
+        {% for text in text_pages %}
+        <div class="card" style="margin-bottom:12px"><div class="card-head"><h3>{% blocktranslate with n=forloop.counter %}Page {{ n }}{% endblocktranslate %}</h3></div><pre class="plain-page">{{ text }}</pre></div>
+        {% empty %}<p class="muted">{% translate "This essay has no text copy; please read the pages." %}</p>
+        {% endfor %}
+      </div>
+    </div>
+  </article>
+
+  <form class="scorer" method="post" id="sheet-form" novalidate
+        data-autosave-url="{% url 'judge_autosave' essay.code %}"
+        data-locked="{{ locked|yesno:'1,0' }}"
+        data-min-words="{{ min_words }}"
+        data-msg-saving="{% translate 'Saving…' %}"
+        data-msg-saved="{% translate 'Draft saved at' %}"
+        data-msg-unsaved="{% translate 'Unsaved changes' %}"
+        data-msg-error="{% translate 'Could not save — check your connection.' %}"
+        data-msg-confirm="{% translate 'Submit this sheet? You will not be able to change it afterwards.' %}"
+        data-msg-short="{% translate 'more needed' %}">
+    {% csrf_token %}
+    <div class="scorer-scroll">
+      {% if locked %}
+        <div class="notice ok">{% blocktranslate with when=assignment.submitted_at|date:"DATETIME_FORMAT" %}Submitted on {{ when }}. This sheet is locked; contact the committee if it needs to be reopened.{% endblocktranslate %}</div>
+      {% elif deadline %}
+        <p class="muted small" style="margin:0 0 12px">{% translate "Deadline" %}: {{ deadline|date:"DATETIME_FORMAT" }}</p>
+      {% endif %}
+      {% if problems %}
+        <div class="notice danger" role="alert">
+          <strong>{% translate "Your draft is saved, but the sheet cannot be submitted yet:" %}</strong>
+          <ul>{% for problem in problems %}<li>{{ problem }}</li>{% endfor %}</ul>
+        </div>
+      {% endif %}
+      {% if form.errors %}<div class="notice danger">{{ form.errors }}</div>{% endif %}
+
+      <fieldset {% if locked %}disabled{% endif %} style="border:0;margin:0;padding:0;min-width:0">
+        {% for criterion in criteria %}
+        <section class="card criterion" data-criterion>
+          <div class="card-head">
+            <h2>{{ forloop.counter }}. {{ criterion.name }}</h2>
+            <div class="nowrap"><label class="sr-only" for="{{ criterion.score.id_for_label }}">{{ criterion.name }} — {% translate "score" %}</label>{{ criterion.score }} <span class="muted">/ 10</span></div>
+          </div>
+          <div class="card-body">
+            <ul class="address">{% for question in criterion.address %}<li>{{ question }}</li>{% endfor %}</ul>
+            <details class="levels">
+              <summary>{% translate "Scoring guide" %}</summary>
+              {% for level in criterion.levels %}
+              <div class="level" data-level="{{ level.index }}">
+                <div class="level-range">{{ level.range }}</div>
+                <div>
+                  <ul>{% for line in level.desc %}<li>{{ line }}</li>{% endfor %}</ul>
+                  {% for example in level.examples %}<div class="example">{{ example }}</div>{% endfor %}
+                </div>
+              </div>
+              {% endfor %}
+            </details>
+            <label class="sr-only" for="{{ criterion.comment.id_for_label }}">{{ criterion.name }} — {% translate "justification" %}</label>
+            {{ criterion.comment }}
+            <div class="wordcount"><span data-words>0</span>&nbsp;{% translate "words" %}</div>
+          </div>
+        </section>
+        {% endfor %}
+
+        <section class="card criterion">
+          <div class="card-head"><h2>{% translate "Overall comments" %}</h2><span class="muted small">{% translate "Optional" %}</span></div>
+          <div class="card-body">
+            <p class="muted small">{% translate "Summary judgement, comparison with the rest of the division, or anything the criteria do not capture." %}</p>
+            {{ form.overall_comment }}
+            <div class="wordcount"><span data-words>0</span>&nbsp;{% translate "words" %}</div>
+          </div>
+        </section>
+
+        <section class="card criterion">
+          <div class="card-head"><h2>{% translate "Flags and referral to the committee chair" %}</h2></div>
+          <div class="card-body">
+            <label class="check">{{ form.plagiarism_suspected }} <span>{% translate "I suspect plagiarism in this essay" %}</span></label>
+            <label class="check">{{ form.refer_ai_markers }} <span>{% translate "Refer: unambiguous AI markers (e.g. fabricated citations, assistant-style phrasing, model-formatted title page)" %}</span></label>
+            <label class="check">{{ form.refer_other }} <span>{% translate "Refer: other reason" %}</span></label>
+            <label for="{{ form.flag_notes.id_for_label }}">{% translate "Notes on flags" %}</label>
+            {{ form.flag_notes }}
+            <div class="help muted small" style="margin-top:4px">{% translate "Required if any box is ticked: identify the passage(s) and your reason." %}</div>
+          </div>
+        </section>
+
+        <section class="card criterion">
+          <div class="card-body">
+            <div class="sheet-summary">
+              <div><b id="sum-total">—</b><span>{% translate "Total / 40" %}</span></div>
+              <div><b id="sum-average">—</b><span>{% translate "Average / 10" %}</span></div>
+              <div id="sum-words-box"><b id="sum-words">0</b><span>{% blocktranslate %}Words (min. {{ min_words }}){% endblocktranslate %}</span></div>
+            </div>
+            <hr>
+            <label class="check">{{ form.confirmed }} <span>{{ rubric.confirmation }}</span></label>
+            <div class="form-row">
+              <div class="field"><label for="{{ form.signature.id_for_label }}">{% translate "Type your name to sign" %}</label>{{ form.signature }}</div>
+              <div class="field"><span class="label">{% translate "Date" %}</span><div style="padding:8px 0">{% if locked %}{{ assignment.submitted_at|date:"DATE_FORMAT" }}{% else %}{% now "DATE_FORMAT" %}{% endif %}</div></div>
+            </div>
+          </div>
+        </section>
+      </fieldset>
+
+      {% if not locked %}
+      <details class="levels" style="margin-top:20px">
+        <summary>{% translate "I cannot judge this essay fairly" %}</summary>
+        <div style="padding:12px">
+          <p class="small">{% translate "If your personal standpoint on the issue hinders your ability to judge this essay fairly, return it here. It will go to the committee chair for reassignment and disappear from your list. Your draft scores will not count." %}</p>
+          <label for="recuse-reason">{% translate "Reason (seen only by the committee)" %}</label>
+          <textarea id="recuse-reason" name="reason" rows="2" form="recuse-form"></textarea>
+          <button class="btn btn-danger btn-small" type="submit" form="recuse-form" style="margin-top:8px">{% translate "Return essay to the chair" %}</button>
+        </div>
+      </details>
+      {% endif %}
+    </div>
+
+    <div class="savebar">
+      {% if locked %}
+        <span class="status">{% translate "Submitted" %} · {{ assignment.submitted_at|date:"SHORT_DATETIME_FORMAT" }}</span>
+        <a class="btn" href="{% url 'judge_dashboard' %}">{% translate "Back to my essays" %}</a>
+      {% else %}
+        <span class="status" id="save-status" aria-live="polite"></span>
+        <button class="btn" type="submit" name="action" value="save">{% translate "Save draft" %}</button>
+        <button class="btn btn-primary" type="submit" name="action" value="submit" id="submit-button">{% translate "Submit sheet" %}</button>
+      {% endif %}
+    </div>
+  </form>
+  {% if not locked %}
+  <form method="post" action="{% url 'judge_recuse' essay.code %}" id="recuse-form">{% csrf_token %}</form>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+{{ level_bounds|json_script:"level-bounds" }}
+<script src="{% static 'portal/js/sheet.js' %}"></script>
+{% endblock %}

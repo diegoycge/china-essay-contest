@@ -1,0 +1,63 @@
+{% extends "portal/base.html" %}
+{% load i18n static %}
+{% block title %}{% translate "Account" %}{% endblock %}
+{% block container_class %}narrow{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>{% translate "Account" %}</h1><p>{{ user.email }} · {{ user.get_role_display }}</p></div></div>
+<div class="stack">
+  <form method="post" class="card" novalidate>
+    {% csrf_token %}
+    <div class="card-head"><h2>{% translate "Your details" %}</h2></div>
+    <div class="card-body">
+      <div class="form-row">
+        {% include "portal/_field.html" with field=profile_form.full_name %}
+        {% include "portal/_field.html" with field=profile_form.affiliation %}
+      </div>
+      <button class="btn btn-primary" name="action" value="profile" type="submit">{% translate "Save" %}</button>
+    </div>
+  </form>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Passkeys" %}</h2></div>
+    {% if passkeys %}
+    <div class="table-wrap"><table>
+      <thead><tr><th>{% translate "Device" %}</th><th>{% translate "Added" %}</th><th>{% translate "Last used" %}</th><th></th></tr></thead>
+      <tbody>
+      {% for key in passkeys %}
+        <tr>
+          <td>{{ key.name|default:_("Passkey") }}</td>
+          <td class="small muted">{{ key.created_at|date:"SHORT_DATE_FORMAT" }}</td>
+          <td class="small muted">{% if key.last_used_at %}{{ key.last_used_at|date:"SHORT_DATETIME_FORMAT" }}{% else %}—{% endif %}</td>
+          <td class="right">
+            <form method="post" class="inline-form" data-confirm="{% translate 'Remove this passkey? You will no longer be able to sign in with it.' %}">{% csrf_token %}
+              <input type="hidden" name="passkey" value="{{ key.pk }}">
+              <button class="btn btn-small btn-danger" name="action" value="remove_passkey">{% translate "Remove" %}</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table></div>
+    {% endif %}
+    <div class="card-body" data-passkey-ui {% include "portal/auth/_passkey_messages.html" %}>
+      {% csrf_token %}
+      <p class="small muted">{% translate "A passkey lets you sign in with your fingerprint, face or device PIN instead of a password. Add one on each device you judge on." %}</p>
+      <button type="button" class="btn" data-passkey="register" data-options-url="{% url 'passkey_register_options' %}" data-verify-url="{% url 'passkey_register_verify' %}">{% translate "Add a passkey on this device" %}</button>
+      <p data-passkey-status class="small muted" style="margin:8px 0 0;min-height:1.4em" aria-live="polite"></p>
+    </div>
+    <p data-passkey-missing hidden class="card-body small muted" style="margin:0">{% translate "This browser cannot create passkeys." %}</p>
+  </div>
+  <form method="post" class="card" novalidate>
+    {% csrf_token %}
+    <div class="card-head"><h2>{% if has_password %}{% translate "Change password" %}{% else %}{% translate "Add a password" %}{% endif %}</h2></div>
+    <div class="card-body">
+      {% if has_password %}{% include "portal/_field.html" with field=password_form.current %}{% else %}<p class="small muted">{% translate "You sign in with a passkey. A password is optional; it gives you a second way in." %}</p>{% endif %}
+      <div class="form-row">
+        {% include "portal/_field.html" with field=password_form.password1 %}
+        {% include "portal/_field.html" with field=password_form.password2 %}
+      </div>
+      <button class="btn btn-primary" name="action" value="password" type="submit">{% if has_password %}{% translate "Change password" %}{% else %}{% translate "Add a password" %}{% endif %}</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{% static 'portal/js/passkeys.js' %}"></script>{% endblock %}

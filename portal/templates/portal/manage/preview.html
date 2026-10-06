@@ -1,0 +1,21 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{{ essay.code }} · {% translate "What judges see" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div>
+    <p class="small" style="margin:0 0 6px"><a href="{% url 'manage_essay' essay.pk %}">← {{ essay.code }}</a></p>
+    <h1>{% translate "What judges see" %} <span class="code" style="font-size:22px">{{ essay.code }}</span> {% essay_badge essay %}</h1>
+    <p>{% translate "These are the released pages exactly as a judge gets them: flat images with the redactions burned in. Nothing lies underneath a black box." %}</p>
+  </div>
+  <div class="actions"><a class="btn" href="{% url 'manage_review' essay.pk %}">{% translate "Edit redactions" %}</a></div>
+</div>
+{% if essay.status != "approved" %}<div class="notice warn">{% translate "This essay is not currently released; these are the pages from its last release." %}</div>{% endif %}
+<div class="essay-pages" style="max-width:860px">
+  {% for n in pages %}
+  <figure><img src="{% url 'manage_released_page' essay.pk n %}" alt="{% blocktranslate %}Page {{ n }}{% endblocktranslate %}" loading="lazy"><figcaption>{{ n }} / {{ essay.released_pages }}</figcaption></figure>
+  {% endfor %}
+</div>
+<h2 style="margin:24px 0 10px">{% translate "Text judges can copy" %}</h2>
+{% for text in text_pages %}<div class="card" style="margin-bottom:12px;max-width:860px"><div class="card-head"><h3>{% blocktranslate with n=forloop.counter %}Page {{ n }}{% endblocktranslate %}</h3></div><pre class="plain-page">{{ text }}</pre></div>{% endfor %}
+{% endblock %}

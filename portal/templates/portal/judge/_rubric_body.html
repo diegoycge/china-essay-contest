@@ -1,0 +1,55 @@
+{% load i18n portal_tags %}
+<div class="rubric-section">
+  {% if brief %}
+  <h2>{% translate "This year’s contest" %}</h2>
+  <p class="muted">{% translate "What contestants were asked to do, from the contest website." %} <a href="{{ rubric.url }}" rel="noopener noreferrer" target="_blank">{{ rubric.url }}</a></p>
+  <ul>{% for line in brief %}<li>{{ line }}</li>{% endfor %}</ul>
+  {% if contest.contact_email %}<p>{% translate "Questions about the contest or this portal:" %} <a href="mailto:{{ contest.contact_email }}">{{ contest.contact_email }}</a></p>{% endif %}
+  {% if prompts %}
+  <div class="card" style="margin-top:16px">
+    <div class="card-head"><h2>{% translate "Essay prompts" %}</h2></div>
+    <div class="table-wrap">
+      <table class="rubric-table">
+        <thead><tr><th>#</th><th>{% translate "Category" %}</th><th>{% translate "Prompt" %}</th></tr></thead>
+        <tbody>
+        {% for prompt in prompts %}
+          <tr><td>{{ prompt.roman }}</td><td class="nowrap">{{ prompt.get_division_display }}</td><td><strong>{{ prompt|prompt_title }}</strong><br>{{ prompt|prompt_text }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+  {% endif %}
+
+  <h2>{% translate "General instructions" %}</h2>
+  <ul>{% for item in rubric.general %}<li>{{ item|urlize }}</li>{% endfor %}</ul>
+
+  <h2>{% translate "Score ranges" %}</h2>
+  <p>{{ rubric.score_ranges }}</p>
+
+  <h2>{% translate "A note on AI and plagiarism" %}</h2>
+  {% for paragraph in rubric.ai_note %}<p>{{ paragraph }}</p>{% endfor %}
+
+  <h2>{% translate "Criteria for scoring" %}</h2>
+  <p>{{ rubric.criteria_intro }}</p>
+  {% for criterion in rubric.criteria %}
+  <div class="card" style="margin-top:16px">
+    <div class="card-head"><h2>{{ criterion.name }}</h2></div>
+    <div class="table-wrap">
+      <table class="rubric-table">
+        <thead><tr><th>{% translate "Level" %}</th><th>{% translate "Description" %}</th><th>{% translate "Examples" %}</th></tr></thead>
+        <tbody>
+        {% for level in criterion.levels %}
+          <tr>
+            <td>{{ level.range }}</td>
+            <td><ul>{% for line in level.desc %}<li>{{ line }}</li>{% endfor %}</ul></td>
+            <td class="example">{% for example in level.examples %}<div>{{ example }}</div>{% empty %}{{ level.examples_note }}{% endfor %}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+</div>

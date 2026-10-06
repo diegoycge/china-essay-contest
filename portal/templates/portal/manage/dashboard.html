@@ -1,0 +1,73 @@
+{% extends "portal/base.html" %}
+{% load i18n portal_tags %}
+{% block title %}{% translate "Dashboard" %}{% endblock %}
+{% block content %}
+<div class="page-head">
+  <div><h1>{% translate "Dashboard" %}</h1></div>
+  <div class="actions">
+    <a class="btn" href="{% url 'manage_upload' %}">{% translate "Upload essays" %}</a>
+    <a class="btn btn-primary" href="{% url 'manage_assignments' %}">{% translate "Assignments" %}</a>
+  </div>
+</div>
+
+<div class="grid four">
+  <div class="card stat">
+    <div class="stat-label">{% translate "Essays uploaded" %}</div>
+    <div class="stat-value">{{ total_essays }}</div>
+    <div class="stat-note">{% blocktranslate %}{{ released }} released to judges{% endblocktranslate %}</div>
+  </div>
+  <div class="card stat">
+    <div class="stat-label">{% translate "Sheets submitted" %}</div>
+    <div class="stat-value">{{ submitted_total }} <span class="muted" style="font-size:16px">/ {{ active_total }}</span></div>
+    <div class="bar thin" style="margin-top:10px"><span style="width:{{ percent }}%"></span></div>
+  </div>
+  <div class="card stat">
+    <div class="stat-label">{% translate "Essays fully scored" %}</div>
+    <div class="stat-value">{{ complete_essays }} <span class="muted" style="font-size:16px">/ {{ released }}</span></div>
+  </div>
+  <div class="card stat{% if deadline_passed and overdue_total %} attention{% endif %}">
+    <div class="stat-label">{% translate "Judging deadline" %}</div>
+    {% if deadline %}
+      <div class="stat-value" style="font-size:19px;margin-top:10px">{{ deadline|date:"DATETIME_FORMAT" }}</div>
+      <div class="stat-note">{% if deadline_passed %}{% blocktranslate %}Passed — {{ overdue_total }} sheets overdue{% endblocktranslate %}{% else %}{% blocktranslate with until=deadline|timeuntil %}{{ until }} left{% endblocktranslate %}{% endif %}</div>
+    {% else %}
+      <div class="stat-value" style="font-size:19px;margin-top:10px">—</div>
+      <div class="stat-note"><a href="{% url 'manage_settings' %}">{% translate "Set a deadline" %}</a></div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="grid side" style="margin-top:18px">
+  <div class="card">
+    <div class="card-head"><h2>{% translate "Needs attention" %}</h2></div>
+    <div class="table-wrap"><table>
+      <tbody>
+        <tr><td>{% translate "Essays waiting for anonymization review" %}</td><td class="num">{% if needs_review %}<span class="badge badge-warn">{{ needs_review }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_review_queue' %}">{% translate "Review" %}</a></td></tr>
+        <tr><td>{% translate "Files whose text could not be read" %}</td><td class="num">{% if failed %}<span class="badge badge-danger">{{ failed }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_essays' %}?status=failed">{% translate "Open" %}</a></td></tr>
+        <tr><td>{% translate "Released essays still missing readers" %}</td><td class="num">{% if essays_missing_readers %}<span class="badge badge-warn">{{ essays_missing_readers }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_assignments' %}">{% translate "Assign" %}</a></td></tr>
+        <tr><td>{% translate "Assignments not yet announced by email" %}</td><td class="num">{% if unnotified %}<span class="badge badge-info">{{ unnotified }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_assignments' %}">{% translate "Notify" %}</a></td></tr>
+        <tr><td>{% translate "Divergent scores awaiting a re-score" %}</td><td class="num">{% if needs_rescore %}<span class="badge badge-warn">{{ needs_rescore }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_divergence' %}">{% translate "Open" %}</a></td></tr>
+        <tr><td>{% translate "Open referrals from judges" %}</td><td class="num">{% if open_referrals %}<span class="badge badge-warn">{{ open_referrals }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_referrals' %}">{% translate "Open" %}</a></td></tr>
+        <tr><td>{% translate "Judges who have not signed the statement" %}</td><td class="num">{% if unsigned_judges %}<span class="badge badge-info">{{ unsigned_judges }}</span>{% else %}0{% endif %}</td><td class="right"><a href="{% url 'manage_users' %}">{% translate "Open" %}</a></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="card">
+    <div class="card-head"><h2>{% translate "By division" %}</h2></div>
+    <div class="card-body">
+      {% for d in divisions %}
+      <div style="margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between"><strong>{{ d.label }}</strong><span class="muted small tabular">{{ d.complete }} / {{ d.released }} {% translate "fully scored" %}</span></div>
+        <div class="bar" style="margin-top:6px"><span style="width:{{ d.percent }}%"></span></div>
+      </div>
+      {% endfor %}
+      {% if disqualified %}<p class="muted small" style="margin:0">{% blocktranslate %}{{ disqualified }} withdrawn or disqualified{% endblocktranslate %}</p>{% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:18px">
+  <div class="card-head"><h2>{% translate "Judge progress" %}</h2><a class="small" href="{% url 'manage_users' %}">{% translate "Manage judges" %}</a></div>
+  {% include "portal/manage/_progress_table.html" %}
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% load i18n %}
+<nav class="sidebar" aria-label="{% translate 'Committee' %}">
+  <h4>{% translate "Overview" %}</h4>
+  <a href="{% url 'manage_dashboard' %}" class="{% if nav == 'dashboard' %}active{% endif %}">{% translate "Dashboard" %}</a>
+  <h4>{% translate "Essays" %}</h4>
+  <a href="{% url 'manage_essays' %}" class="{% if nav == 'essays' %}active{% endif %}">{% translate "All essays" %}</a>
+  <a href="{% url 'manage_upload' %}" class="{% if nav == 'upload' %}active{% endif %}">{% translate "Upload" %}</a>
+  <a href="{% url 'manage_review_queue' %}" class="{% if nav == 'review' %}active{% endif %}">{% translate "Anonymization review" %}{% if nav_review_count %}<span class="count">{{ nav_review_count }}</span>{% endif %}</a>
+  <h4>{% translate "Judging" %}</h4>
+  <a href="{% url 'manage_users' %}" class="{% if nav == 'users' %}active{% endif %}">{% translate "Judges and admins" %}</a>
+  <a href="{% url 'manage_assignments' %}" class="{% if nav == 'assignments' %}active{% endif %}">{% translate "Assignments" %}</a>
+  <a href="{% url 'manage_divergence' %}" class="{% if nav == 'divergence' %}active{% endif %}">{% translate "Divergence and re-scores" %}</a>
+  <a href="{% url 'manage_referrals' %}" class="{% if nav == 'referrals' %}active{% endif %}">{% translate "Referrals" %}{% if nav_referral_count %}<span class="count">{{ nav_referral_count }}</span>{% endif %}</a>
+  <a href="{% url 'manage_results' %}" class="{% if nav == 'results' %}active{% endif %}">{% translate "Results" %}</a>
+  <h4>{% translate "Setup" %}</h4>
+  <a href="{% url 'manage_prompts' %}" class="{% if nav == 'prompts' %}active{% endif %}">{% translate "Essay prompts" %}</a>
+  <a href="{% url 'manage_settings' %}" class="{% if nav == 'settings' %}active{% endif %}">{% translate "Settings" %}</a>
+  <a href="{% url 'manage_logs' %}" class="{% if nav == 'logs' %}active{% endif %}">{% translate "Logs" %}</a>
+</nav>

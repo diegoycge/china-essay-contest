@@ -1,0 +1,18 @@
+{% load i18n %}
+{% if last_link %}
+<div class="notice ok">
+  <strong>{% if last_link.kind == "invite" %}{% blocktranslate with email=last_link.email %}Invitation for {{ email }}{% endblocktranslate %}{% else %}{% blocktranslate with email=last_link.email %}Sign-in link for {{ email }}{% endblocktranslate %}{% endif %}</strong>
+  {% if email_configured %}
+    <p style="margin:6px 0 0">{% translate "It has been emailed. You can also send it yourself; the link is shown only once." %}</p>
+  {% else %}
+    <p style="margin:6px 0 0">{% translate "Nothing has been sent yet. Send this message from your own email: the button opens it in your mail app, already addressed. The link works once and is shown only now." %}</p>
+  {% endif %}
+  <div class="actions" style="margin-top:10px">
+    <a class="btn btn-primary btn-small" href="{{ last_link.mailto }}">{% translate "Open in my email app" %}</a>
+    <button type="button" class="btn btn-small" data-copy="last-message">{% translate "Copy message" %}</button>
+    <button type="button" class="btn btn-small" data-copy="last-link">{% translate "Copy link only" %}</button>
+  </div>
+  <textarea id="last-message" class="draft" readonly rows="7" data-select-on-focus>{{ last_link.message }}</textarea>
+  <input type="text" readonly value="{{ last_link.link }}" id="last-link" class="sr-only" tabindex="-1" aria-hidden="true">
+</div>
+{% endif %}
