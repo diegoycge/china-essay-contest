@@ -94,7 +94,7 @@ docker compose exec db pg_dump -U portal portal | gzip > portal-$(date +%F).sql.
 ```
 
 ```bash
-docker run --rm -v judging-portal_media:/m -v "$PWD":/out alpine tar czf /out/media-$(date +%F).tgz -C /m .
+docker run --rm -v china-essay-contest_media:/m -v "$PWD":/out alpine tar czf /out/media-$(date +%F).tgz -C /m .
 ```
 
 Both contain author identities. Store them accordingly.

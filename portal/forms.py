@@ -24,7 +24,7 @@ def _to_score(value):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(label=_("Email"), widget=forms.EmailInput(attrs={"autofocus": True}))
+    email = forms.EmailField(label=_("Email"))
     password = forms.CharField(label=_("Password"), widget=forms.PasswordInput, strip=False)
 
 

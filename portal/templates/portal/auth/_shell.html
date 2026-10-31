@@ -1,10 +1,10 @@
 {% extends "portal/base.html" %}
-{% load i18n %}
+{% load i18n static %}
 {% block page %}
 <div class="auth-page">
   <div class="auth-hero">
     <div class="auth-title">
-      <div class="brand-mark" aria-hidden="true">论</div>
+      <div class="brand-mark" aria-hidden="true"><img src="{% static 'portal/img/logo-mark.png' %}" alt=""></div>
       <h1>{{ contest.contest_name }}</h1>
       <p>{% translate "Judging portal" %}</p>
     </div>
