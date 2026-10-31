@@ -70,6 +70,19 @@ If the server already runs a reverse proxy, delete the `caddy` service from
 `docker-compose.yml`, publish the `web` service's port 8000 to it, and make
 sure the proxy sets `X-Forwarded-Proto` and `X-Forwarded-For`.
 
+### Server size
+
+2 GB of memory is comfortable. 1 GB works if you uncomment `WEB_CONCURRENCY=2`
+and `PDF_MEMORY_MB=768` in `.env` and give the server 2 GB of swap, so that a
+burst of uploads slows it down instead of stopping the database. As root:
+
+```bash
+fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile
+echo '/swapfile none swap sw 0 0' >> /etc/fstab
+```
+
+Plans with less than 1 GB, or with an IPv6 address only, are not enough.
+
 ### Backups
 
 Everything lives in two Docker volumes: `pgdata` (database) and `media`

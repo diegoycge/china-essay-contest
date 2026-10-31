@@ -3,7 +3,8 @@ FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1 \
-    MEDIA_ROOT=/data/media
+    MEDIA_ROOT=/data/media \
+    WEB_CONCURRENCY=3
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gettext \
@@ -28,4 +29,4 @@ ENTRYPOINT ["/app/entrypoint.sh"]
 # No access log on purpose: invitation and password-reset links carry their
 # one-time token in the URL path, and it should not be copied into log files.
 # The portal keeps its own record of who did what under Logs.
-CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120"]
+CMD ["gunicorn", "config.wsgi:application", "--bind", "0.0.0.0:8000", "--timeout", "120"]
